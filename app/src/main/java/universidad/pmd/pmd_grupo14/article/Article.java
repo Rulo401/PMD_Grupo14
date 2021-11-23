@@ -17,10 +17,10 @@ public class Article {
         this.resume = resume;
         this.body = body;
         switch(category.toLowerCase(Locale.ROOT)){
-            case "nacional": this.category = Category.Nacional;break;
-            case "economia": this.category = Category.Economía;break;
-            case "deportes": this.category = Category.Deportes;break;
-            case "tecnologia": this.category = Category.Tecnología;break;
+            case "nacional": this.category = Category.National;break;
+            case "economia": this.category = Category.Economy;break;
+            case "deportes": this.category = Category.Sports;break;
+            case "tecnologia": this.category = Category.Technology;break;
             default: this.category = null;break;
         }
 
