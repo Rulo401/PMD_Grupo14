@@ -1,4 +1,4 @@
-package universidad.pmd.pmd_grupo14.util;
+package upm.pmd.grupo14.util;
 
 import androidx.annotation.RequiresApi;
 import android.graphics.Bitmap;

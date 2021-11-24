@@ -1,4 +1,4 @@
-package universidad.pmd.pmd_grupo14;
+package upm.pmd.grupo14;
 
 import org.junit.Test;
 

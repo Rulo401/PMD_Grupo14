@@ -1,8 +1,8 @@
-package universidad.pmd.pmd_grupo14.article;
+package upm.pmd.grupo14.article;
 
 import java.util.Locale;
 
-import universidad.pmd.pmd_grupo14.common.Category;
+import upm.pmd.grupo14.common.Category;
 
 public class Article {
     private String title;
