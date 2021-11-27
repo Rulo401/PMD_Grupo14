@@ -1,10 +1,6 @@
 package upm.pmd.grupo14.util;
 
-import android.net.wifi.WifiConfiguration;
-
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 
 import upm.pmd.grupo14.models.login.LoginToken;
