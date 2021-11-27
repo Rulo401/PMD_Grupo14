@@ -7,7 +7,7 @@ import android.os.Build;
 import android.util.Base64;
 import java.io.ByteArrayOutputStream;
 
-public class Utils {
+public class ImageSerializer {
     @RequiresApi(api = Build.VERSION_CODES.FROYO)
     public static Bitmap base64StringToImg(String input)
     {
