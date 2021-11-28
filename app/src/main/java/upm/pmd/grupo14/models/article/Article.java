@@ -41,7 +41,10 @@ public class Article {
     @SerializedName("username")
     private String username;
 
-    //Crear getter y setters cuando se decidan todos los atributos
+    private Image image;
+
+    private Image thubnail;
+
 
     public String getId() {
         return id;
@@ -144,4 +147,12 @@ public class Article {
     public void setUsername(String username) {
         this.username = username;
     }
+
+    public Image getImage() { return image; }
+
+    public void setImage(Image image) { this.image = image; }
+
+    public Image getThubnail() { return thubnail; }
+
+    public void setThubnail(Image thubnail) { this.thubnail = thubnail; }
 }

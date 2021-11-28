@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android/PMD_Grupo14/app/src/main/res/layout/activity_main.xml" value="0.20520833333333333" />
+        <entry key="..\:/Android/PMD_Grupo14/app/src/main/res/layout/layout_noticias.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/raulc/AndroidStudioProjects/PMD_Grupo14/app/src/main/res/drawable/ic_login.xml" value="0.2708333333333333" />
         <entry key="..\:/Users/raulc/AndroidStudioProjects/PMD_Grupo14/app/src/main/res/layout/activity_main.xml" value="0.1793478260869565" />
       </map>
