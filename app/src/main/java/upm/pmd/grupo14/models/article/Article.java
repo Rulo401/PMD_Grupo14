@@ -148,11 +148,11 @@ public class Article {
         this.username = username;
     }
 
-    public Image getImage() { return image; }
+    public Image getImage() { return image != null ? image : new Image(null,null); }
 
     public void setImage(Image image) { this.image = image; }
 
-    public Image getThubnail() { return thubnail; }
+    public Image getThubnail() { return thubnail != null ? thubnail : new Image(null,null); }
 
     public void setThubnail(Image thubnail) { this.thubnail = thubnail; }
 }
