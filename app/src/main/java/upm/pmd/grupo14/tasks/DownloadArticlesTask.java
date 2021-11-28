@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.widget.ListView;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import upm.pmd.grupo14.R;
@@ -29,6 +30,7 @@ public class DownloadArticlesTask extends AsyncTask<Integer,Void, List<Article>>
         super.onPostExecute(articles);
         ListView lv = act.findViewById(R.id.lv_articles);
         ArticleAdapter adapter = new ArticleAdapter();
+        adapter.addArticles(articles);
         lv.setAdapter(adapter);
     }
 }
