@@ -1,13 +1,18 @@
 package upm.pmd.grupo14.util;
 
+import android.os.NetworkOnMainThreadException;
+
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.HttpURLConnection;
 import java.net.URLConnection;
+import java.net.UnknownServiceException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -42,15 +47,18 @@ public class WebServices {
     public static List<Article> getArticles (int n){
         List<Article> articlesList = new LinkedList<>();
         try {
-            URLConnection conn =  new URL(Constants.url+"/articles/"+n+"/25").openConnection();
+            URL url = new URL(Constants.url+"/articles/"+n+"/50");
+            URLConnection conn = url.openConnection();
             Gson gson = new Gson();
-            articlesList = Arrays.asList(gson.fromJson(Utils.readInputStream(conn.getInputStream()), Article[].class));
+            InputStream in = conn.getInputStream();
+            articlesList = Arrays.asList(gson.fromJson(Utils.readInputStream(in), Article[].class));
             for (Article art : articlesList){
                 if (art.getThumbnail_data() != null && art.getThumbnail_media_type() != null){
                     art.setThubnail(new Image(ImageSerializer.base64StringToImg(art.getThumbnail_data()),art.getThumbnail_media_type()));
                     System.out.println();
                 }
             }
+            in.close();
         }catch (Exception e){}
         return articlesList;
     }
@@ -60,11 +68,14 @@ public class WebServices {
         try {
             URLConnection conn = new URL(Constants.url+"/article/"+id).openConnection();
             Gson gson = new Gson();
-            art = gson.fromJson(Utils.readInputStream(conn.getInputStream()),Article.class);
+            InputStream in = conn.getInputStream();
+            art = gson.fromJson(Utils.readInputStream(in),Article.class);
             if(art.getImage_data()!=null && art.getImage_media_type()!=null){
                 art.setImage(new Image(ImageSerializer.base64StringToImg(art.getImage_data()),art.getImage_media_type()));
             }
-        }catch (Exception e){}
+            in.close();
+        }
+        catch (Exception e){}
         return art;
     }
 
