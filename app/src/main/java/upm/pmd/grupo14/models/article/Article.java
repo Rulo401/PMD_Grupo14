@@ -5,6 +5,10 @@ import com.google.gson.annotations.SerializedName;
 import upm.pmd.grupo14.common.Category;
 
 public class Article {
+
+    public Article(){
+        this.category=Category.None;
+    }
     @SerializedName("id")
     private String id;
 

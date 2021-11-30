@@ -42,7 +42,7 @@ public class WebServices {
     public static List<Article> getArticles (int n){
         List<Article> articlesList = new LinkedList<>();
         try {
-            URLConnection conn =  new URL(Constants.url+"/articles/"+n+"/70").openConnection();
+            URLConnection conn =  new URL(Constants.url+"/articles/"+n+"/25").openConnection();
             Gson gson = new Gson();
             articlesList = Arrays.asList(gson.fromJson(Utils.readInputStream(conn.getInputStream()), Article[].class));
             for (Article art : articlesList){
@@ -61,7 +61,9 @@ public class WebServices {
             URLConnection conn = new URL(Constants.url+"/article/"+id).openConnection();
             Gson gson = new Gson();
             art = gson.fromJson(Utils.readInputStream(conn.getInputStream()),Article.class);
-            art.setImage(new Image(ImageSerializer.base64StringToImg(art.getImage_data()),art.getImage_media_type()));
+            if(art.getImage_data()!=null && art.getImage_media_type()!=null){
+                art.setImage(new Image(ImageSerializer.base64StringToImg(art.getImage_data()),art.getImage_media_type()));
+            }
         }catch (Exception e){}
         return art;
     }

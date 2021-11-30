@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PMD_Grupo14">
         <activity
+            android:name=".ArticleDetailActivity"
+            android:exported="true" />
+        <activity
             android:name="upm.pmd.grupo14.MainActivity"
             android:exported="true">
             <intent-filter>
