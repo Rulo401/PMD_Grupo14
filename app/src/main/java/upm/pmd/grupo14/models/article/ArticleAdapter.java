@@ -1,16 +1,20 @@
 package upm.pmd.grupo14.models.article;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.LinkedList;
 import java.util.List;
 
+import upm.pmd.grupo14.ArticleDetailActivity;
+import upm.pmd.grupo14.MainActivity;
 import upm.pmd.grupo14.R;
 
 public class ArticleAdapter extends BaseAdapter {
@@ -47,6 +51,15 @@ public class ArticleAdapter extends BaseAdapter {
         ((TextView)view.findViewById(R.id.txt_title)).setText(articles.get(i).getTitle());
         ((TextView)view.findViewById(R.id.txt_abstract)).setText(articles.get(i).getResume());
         ((ImageView)view.findViewById(R.id.img_thumbnail)).setImageBitmap(articles.get(i).getThubnail().getImg());
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent in = new Intent(viewGroup.getContext(), ArticleDetailActivity.class);
+                in.putExtra(MainActivity.ID_ARTICLE,articles.get(i).getId());
+
+                viewGroup.getContext().startActivity(in);
+            }
+        });
         return view;
     }
 }

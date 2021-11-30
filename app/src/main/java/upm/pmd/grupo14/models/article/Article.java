@@ -80,7 +80,7 @@ public class Article {
             case "Economy": this.category = Category.Economy;break;
             case "Sports": this.category = Category.Sports;break;
             case "Technology": this.category = Category.Technology;break;
-            default: this.category = null;break;
+            default: this.category = Category.None;break;
         }
     }
 

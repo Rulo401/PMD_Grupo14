@@ -10,6 +10,7 @@ import upm.pmd.grupo14.models.article.Article;
 import upm.pmd.grupo14.tasks.DownloadArticlesTask;
 
 public class MainActivity extends AppCompatActivity {
+    public static final String ID_ARTICLE = "id";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
