@@ -6,6 +6,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.core.text.HtmlCompat;
+
 import java.util.List;
 
 import upm.pmd.grupo14.R;
@@ -39,7 +41,7 @@ public class DownloadOneArticleTask extends AsyncTask<String,Void,Article> {
         TextView resume = act.findViewById(R.id.txt_abstract_art);
         resume.setText(art.getResume());
         TextView body = act.findViewById(R.id.txt_body_art);
-        body.setText(art.getBody());
+        body.setText(HtmlCompat.fromHtml(art.getBody(), HtmlCompat.FROM_HTML_MODE_LEGACY));
         TextView user = act.findViewById(R.id.txt_user_art);
         user.setText(art.getUsername());
         TextView date = act.findViewById(R.id.txt_date_art);

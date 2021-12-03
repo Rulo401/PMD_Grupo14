@@ -24,10 +24,10 @@ import upm.pmd.grupo14.models.login.LoginToken;
 
 public class WebServices {
 
-    public static String login(String uri, LoginToken token){
+    public static String login(String uri, String username, String password){
         String result = null;
         String format = "{\"username\":\"%s\",\"passwd\":\"%s\"}";
-        String body = String.format(format,token.getUsername(), token.getPassword());
+        String body = String.format(format, username, password);
         try {
             HttpURLConnection conn = (HttpURLConnection) new URL(uri).openConnection();
             conn.setRequestMethod("POST");
@@ -39,7 +39,8 @@ public class WebServices {
             dos.writeBytes(body);
             dos.flush();
             dos.close();
-            result=conn.getResponseMessage();
+            InputStream in = conn.getInputStream();
+            result = Utils.readInputStream(in);
         }catch (Exception e){}
         return result;
     }
@@ -47,7 +48,7 @@ public class WebServices {
     public static List<Article> getArticles (int n){
         List<Article> articlesList = new LinkedList<>();
         try {
-            URL url = new URL(Constants.url+"/articles/"+n+"/50");
+            URL url = new URL(Constants.url+"/articles/"+n+"/100");
             URLConnection conn = url.openConnection();
             Gson gson = new Gson();
             InputStream in = conn.getInputStream();

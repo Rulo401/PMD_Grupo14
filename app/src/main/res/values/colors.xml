@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="clr_mainApp">#FF00FF</color>
+    <color name="clr_mainApp_variant">#FF5555</color>
+    <color name="clr_background">#EEEEEE</color>
+    <color name="clr_nameApp">#0000FF</color>
+    #Article colors
+    <color name="clr_title">#00FF00</color>
+    <color name="clr_subtitle">#FF0000</color>
+    <color name="clr_category">#00FF00</color>
+    #LoginButton colors
+    <color name="clr_logIN">#00FF00</color>
+    <color name="clr_logOUT">#FF0000</color>
+
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>

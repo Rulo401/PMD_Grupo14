@@ -6,8 +6,10 @@ import android.widget.ListView;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import upm.pmd.grupo14.R;
+import upm.pmd.grupo14.common.Category;
 import upm.pmd.grupo14.models.article.Article;
 import upm.pmd.grupo14.models.article.ArticleAdapter;
 import upm.pmd.grupo14.util.WebServices;
@@ -15,14 +17,19 @@ import upm.pmd.grupo14.util.WebServices;
 public class DownloadArticlesTask extends AsyncTask<Integer,Void, List<Article>> {
 
     private Activity act = null;
+    private Category cat = null;
 
-    public DownloadArticlesTask(Activity act){
+    public DownloadArticlesTask(Activity act){ this.act = act; }
+
+    public DownloadArticlesTask(Activity act, Category cat){
         this.act = act;
+        this.cat = cat;
     }
 
     @Override
     protected List<Article> doInBackground(Integer... ints) {
-        return WebServices.getArticles(ints[0]);
+        return (cat == null) ? WebServices.getArticles(ints[0]) :
+                WebServices.getArticles(ints[0]).stream().filter( art -> art.getCategory().equals(cat)).collect(Collectors.toList());
     }
 
     @Override

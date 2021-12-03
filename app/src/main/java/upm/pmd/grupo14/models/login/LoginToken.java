@@ -1,6 +1,12 @@
 package upm.pmd.grupo14.models.login;
 
+import android.app.Activity;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Semaphore;
+
+import upm.pmd.grupo14.tasks.LoginThread;
 
 public class LoginToken {
     private String username;
@@ -9,43 +15,43 @@ public class LoginToken {
     private String apitoken;
     private String expDate;
 
-    private Semaphore s;
-
     public LoginToken(String username, String password){
         this.username = username;
         this.password = password;
         apitoken = null;
         expDate = null;
-        s = new Semaphore(1);
     }
 
-    public String getUsername() {
+    public synchronized String getUsername() {
         return username;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void updateToken(String newApitoken, String newExpDate){
-        s.acquireUninterruptibly();
+    public synchronized void updateToken(String newApitoken, String newExpDate){
         this.apitoken = newApitoken;
         this.expDate = newExpDate;
-        s.release();
     }
 
-    public String getApitoken(){
-        s.acquireUninterruptibly();
-        String result = apitoken;
-        s.release();
-        return result;
+    public synchronized String getApitoken(){
+        return apitoken;
     }
 
-    public boolean isLoginStillValid(){
-        s.acquireUninterruptibly();
-        boolean result = apitoken == null;// falta verificar si ha expirado
-        s.release();
-        return result;
+    public synchronized boolean isLoginStillValid(){
+        //TODO
+        return apitoken == null;
+    }
+
+    public synchronized boolean signIn(Activity act){
+        List<String> threadResult = new ArrayList<String>(2);
+        LoginThread lt = new LoginThread(act, username, password, threadResult);
+        Thread th = new Thread(lt);
+        th.start();
+        try { th.wait(); } catch (InterruptedException e) {}
+        if(threadResult.size() == 2){
+            apitoken = threadResult.get(0);
+            expDate = threadResult.get(1);
+            return true;
+        }
+        return false;
     }
 
 }
