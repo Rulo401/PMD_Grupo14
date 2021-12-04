@@ -14,6 +14,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
@@ -21,13 +22,15 @@ import com.google.gson.Gson;
 import java.util.List;
 
 import upm.pmd.grupo14.common.Category;
+import upm.pmd.grupo14.models.appContext.LogContext;
 import upm.pmd.grupo14.models.article.Article;
 import upm.pmd.grupo14.models.login.LoginToken;
+import upm.pmd.grupo14.models.login.LoginTokenHolder;
 import upm.pmd.grupo14.tasks.DownloadArticlesTask;
+import upm.pmd.grupo14.util.Utils;
 
 public class MainActivity extends AppCompatActivity {
     public static final String ID_ARTICLE = "id";
-    public static LoginToken loginToken = null;
     public static Activity mainAct;
 
     @Override
@@ -36,8 +39,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mainAct = this;
 
+        LogContext lc = (LogContext) getApplicationContext();
+
         FloatingActionButton btn_log = findViewById(R.id.fab_log);
-        if(loginToken != null){
+        if(lc.getLoginToken() != null){
             btn_log.setImageDrawable(getResources().getDrawable(R.drawable.ic_logout));
             btn_log.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.clr_logOUT)));
         }else{
@@ -48,11 +53,12 @@ public class MainActivity extends AppCompatActivity {
         btn_log.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(loginToken == null){
+                if(lc.getLoginToken() == null){
                     Intent i = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(i);
                 }else{
-                    loginToken = null;
+                    lc.setLoginToken(null);
+                    Utils.deleteUserInPreferences(MainActivity.this);
                     btn_log.setImageDrawable(getResources().getDrawable(R.drawable.ic_login));
                     btn_log.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.clr_logIN)));
                 }
@@ -71,4 +77,20 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LogContext lc = (LogContext) getApplicationContext();
+
+        Toast.makeText(this, (lc.getLoginToken()!= null)?lc.getLoginToken().getApitoken(): "NULL", Toast.LENGTH_LONG).show();
+
+        FloatingActionButton btn_log = findViewById(R.id.fab_log);
+        if(lc.getLoginToken() != null){
+            btn_log.setImageDrawable(getResources().getDrawable(R.drawable.ic_logout));
+            btn_log.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.clr_logOUT)));
+        }else{
+            btn_log.setImageDrawable(getResources().getDrawable(R.drawable.ic_login));
+            btn_log.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.clr_logIN)));
+        }
+    }
 }

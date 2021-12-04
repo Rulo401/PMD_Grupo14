@@ -11,8 +11,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import upm.pmd.grupo14.models.appContext.LogContext;
 import upm.pmd.grupo14.models.article.Article;
+import upm.pmd.grupo14.models.login.LoginTokenHolder;
 import upm.pmd.grupo14.tasks.DownloadOneArticleTask;
+import upm.pmd.grupo14.util.Utils;
 import upm.pmd.grupo14.util.WebServices;
 
 public class ArticleDetailActivity extends AppCompatActivity {
@@ -22,9 +25,10 @@ public class ArticleDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_detail);
+        LogContext lc = (LogContext) getApplicationContext();
 
         FloatingActionButton btn_log = findViewById(R.id.fab_log);
-        if(MainActivity.loginToken != null){
+        if(lc.getLoginToken() != null){
             btn_log.setImageDrawable(getResources().getDrawable(R.drawable.ic_logout));
             btn_log.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.clr_logOUT)));
         }else{
@@ -35,11 +39,12 @@ public class ArticleDetailActivity extends AppCompatActivity {
         btn_log.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(MainActivity.loginToken == null){
+                if(lc.getLoginToken() == null){
                     Intent i = new Intent(ArticleDetailActivity.this, LoginActivity.class);
                     startActivity(i);
                 }else{
-                    MainActivity.loginToken = null;
+                    lc.setLoginToken(null);
+                    Utils.deleteUserInPreferences(ArticleDetailActivity.this);
                     btn_log.setImageDrawable(getResources().getDrawable(R.drawable.ic_login));
                     btn_log.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.clr_logIN)));
                 }

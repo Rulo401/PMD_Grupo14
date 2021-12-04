@@ -18,7 +18,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import upm.pmd.grupo14.common.Constants;
+import upm.pmd.grupo14.models.appContext.LogContext;
 import upm.pmd.grupo14.models.login.LoginToken;
+import upm.pmd.grupo14.models.login.LoginTokenHolder;
+import upm.pmd.grupo14.util.Utils;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -39,12 +42,9 @@ public class LoginActivity extends AppCompatActivity {
                 LoginToken token = new LoginToken(username, password);
 
                 if(token.signIn(LoginActivity.this)){
+                    ((LogContext) getApplicationContext()).setLoginToken(token);
                     if(remindMe){
-                        SharedPreferences pref = MainActivity.mainAct.getSharedPreferences(Constants.PreferenceNames.CONNECTION_FILENAME, Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = pref.edit();
-                        editor.putString(Constants.PreferenceNames.USERNAME, username);
-                        editor.putString(Constants.PreferenceNames.PASSWORD, password);
-                        editor.commit();
+                        Utils.saveUserInPreferences(LoginActivity.this,username, password);
                     }
                     Intent i = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(i);

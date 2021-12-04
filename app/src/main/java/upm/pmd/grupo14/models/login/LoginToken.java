@@ -45,7 +45,7 @@ public class LoginToken {
         LoginThread lt = new LoginThread(act, username, password, threadResult);
         Thread th = new Thread(lt);
         th.start();
-        try { th.wait(); } catch (InterruptedException e) {}
+        try { th.join(); } catch (InterruptedException e) {}
         if(threadResult.size() == 2){
             apitoken = threadResult.get(0);
             expDate = threadResult.get(1);
