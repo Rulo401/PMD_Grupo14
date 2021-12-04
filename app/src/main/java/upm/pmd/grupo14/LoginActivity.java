@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -45,7 +46,8 @@ public class LoginActivity extends AppCompatActivity {
                         editor.putString(Constants.PreferenceNames.PASSWORD, password);
                         editor.commit();
                     }
-                    finish();
+                    Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(i);
                 }else{
                     Toast.makeText(LoginActivity.this, getResources().getString(R.string.invalid_credentials), Toast.LENGTH_SHORT).show();
                 }

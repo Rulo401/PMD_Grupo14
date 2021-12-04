@@ -3,16 +3,14 @@ package upm.pmd.grupo14.tasks;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.core.text.HtmlCompat;
 
-import java.util.List;
+import java.util.Locale;
 
 import upm.pmd.grupo14.R;
 import upm.pmd.grupo14.models.article.Article;
-import upm.pmd.grupo14.models.article.ArticleAdapter;
 import upm.pmd.grupo14.util.WebServices;
 
 public class DownloadOneArticleTask extends AsyncTask<String,Void,Article> {
@@ -34,10 +32,8 @@ public class DownloadOneArticleTask extends AsyncTask<String,Void,Article> {
 
         TextView title = act.findViewById(R.id.txt_title_art);
         title.setText(art.getTitle());
-        TextView subtitle = act.findViewById(R.id.txt_subtitle_art);
-        subtitle.setText(art.getSubtitle());
-        TextView category = act.findViewById(R.id.txt_category_art);
-        category.setText(art.getCategory().name());
+        TextView catSub = act.findViewById(R.id.txt_CatSub);
+        catSub.setText(art.getCategory().name().toUpperCase(Locale.ROOT) + " - " +art.getSubtitle());
         TextView resume = act.findViewById(R.id.txt_abstract_art);
         resume.setText(art.getResume());
         TextView body = act.findViewById(R.id.txt_body_art);
