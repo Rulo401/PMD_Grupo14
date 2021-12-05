@@ -15,6 +15,7 @@
     <string name="btn_cancel">Cancel</string>
     <string name="btn_edit">Edit</string>
     <string name="btn_delete">Delete</string>
+    <string name="btn_confirmation">ARE YOU SURE MDFK</string>
     #Toast
     <string name="upload_error">Error uploading article. Try later!</string>
     <string name="invalid_credentials">Invalid credentials</string>
