@@ -80,7 +80,8 @@ public class WebServices {
         return art;
     }
 
-    public static void uploadArticle (Article article, LoginToken login){
+    public static boolean uploadArticle (Article article, LoginToken login){
+        boolean result = false;
         try {
             HttpURLConnection conn = (HttpURLConnection) new URL(Constants.url+"/articles").openConnection();
             conn.setRequestMethod("POST");
@@ -95,7 +96,9 @@ public class WebServices {
             dos.writeBytes(art_json);
             dos.flush();
             dos.close();
+            result = conn.getResponseCode()==200;
         }catch (Exception e){}
+        return result;
     }
 
 }

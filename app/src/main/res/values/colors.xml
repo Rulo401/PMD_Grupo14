@@ -11,6 +11,8 @@
     #LoginButton colors
     <color name="clr_logIN">#00FF00</color>
     <color name="clr_logOUT">#FF0000</color>
+    #EditArticle colors
+    <color name="clr_wrong">#FF0000</color>
 
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>

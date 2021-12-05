@@ -4,19 +4,14 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import upm.pmd.grupo14.models.appContext.LogContext;
-import upm.pmd.grupo14.models.article.Article;
-import upm.pmd.grupo14.models.login.LoginTokenHolder;
 import upm.pmd.grupo14.tasks.DownloadOneArticleTask;
 import upm.pmd.grupo14.util.Utils;
-import upm.pmd.grupo14.util.WebServices;
 
 public class ArticleDetailActivity extends AppCompatActivity {
 

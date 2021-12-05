@@ -4,5 +4,25 @@
     <string name="txt_password">Password</string>
     <string name="action_sign_in">Sign in</string>
     <string name="check_remindMe">Remind me</string>
+
+    <string name="txt_title">Title</string>
+    <string name="txt_subtitle">Subtitle</string>
+    <string name="txt_abstract">Abstract</string>
+    <string name="txt_category">Category</string>
+    <string name="txt_body">Body</string>
+    <string name="btn_sel_img">Select Image</string>
+    <string name="btn_submit">Submit</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_edit">Edit</string>
+    <string name="btn_delete">Delete</string>
+    #Toast
+    <string name="upload_error">Error uploading article. Try later!</string>
     <string name="invalid_credentials">Invalid credentials</string>
+    #Spinner categories
+    <string-array name="categories">
+        <item>National</item>
+        <item>Sports</item>
+        <item>Technology</item>
+        <item>Economy</item>
+    </string-array>
 </resources>

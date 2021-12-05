@@ -1,31 +1,18 @@
 package upm.pmd.grupo14;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.gson.Gson;
 
-import java.util.List;
-
-import upm.pmd.grupo14.common.Category;
 import upm.pmd.grupo14.models.appContext.LogContext;
-import upm.pmd.grupo14.models.article.Article;
-import upm.pmd.grupo14.models.login.LoginToken;
-import upm.pmd.grupo14.models.login.LoginTokenHolder;
 import upm.pmd.grupo14.tasks.DownloadArticlesTask;
 import upm.pmd.grupo14.util.Utils;
 
