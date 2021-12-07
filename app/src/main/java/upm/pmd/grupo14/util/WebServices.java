@@ -48,7 +48,7 @@ public class WebServices {
     public static List<Article> getArticles (int n){
         List<Article> articlesList = new LinkedList<>();
         try {
-            URL url = new URL(Constants.url+"/articles/"+n+"/100");
+            URL url = new URL(Constants.url+"/articles/"+n+"/200");
             URLConnection conn = url.openConnection();
             Gson gson = new Gson();
             InputStream in = conn.getInputStream();
@@ -83,7 +83,7 @@ public class WebServices {
     public static boolean uploadArticle (Article article, LoginToken login){
         boolean result = false;
         try {
-            HttpURLConnection conn = (HttpURLConnection) new URL(Constants.url+"/articles").openConnection();
+            HttpURLConnection conn = (HttpURLConnection) new URL(Constants.url+"/article").openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Authorization",login.getApitoken());
             conn.setRequestProperty("Content-type", "application/json");
@@ -96,6 +96,20 @@ public class WebServices {
             dos.writeBytes(art_json);
             dos.flush();
             dos.close();
+            result = conn.getResponseCode()==200;
+        }catch (Exception e){}
+        return result;
+    }
+
+    public static boolean deleteArticle (Article article, LoginToken login){
+        boolean result = false;
+        try {
+            HttpURLConnection conn = (HttpURLConnection) new URL(Constants.url+"/article/"+article.getId()).openConnection();
+            conn.setRequestMethod("DEL");
+            conn.setRequestProperty("Authorization",login.getApitoken());
+            conn.setUseCaches(false);
+            conn.setDoInput(true);
+            conn.setDoOutput(true);
             result = conn.getResponseCode()==200;
         }catch (Exception e){}
         return result;

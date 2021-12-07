@@ -19,6 +19,8 @@
     #Toast
     <string name="upload_error">Error uploading article. Try later!</string>
     <string name="invalid_credentials">Invalid credentials</string>
+    <string name="delete_okay">Deleted succesfully</string>
+    <string name="delete_wrong">Couldn\'t delete the article. Try later!</string>
     #Spinner categories
     <string-array name="categories">
         <item>National</item>

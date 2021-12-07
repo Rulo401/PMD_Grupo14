@@ -19,13 +19,21 @@ import upm.pmd.grupo14.ArticleEditActivity;
 import upm.pmd.grupo14.MainActivity;
 import upm.pmd.grupo14.R;
 import upm.pmd.grupo14.models.appContext.LogContext;
+import upm.pmd.grupo14.models.login.LoginToken;
+import upm.pmd.grupo14.tasks.DeleteArticleTask;
 
 public class ArticleAdapter extends BaseAdapter {
 
     List<Article> articles = new LinkedList<Article>();
 
+
     public void addArticles(List<Article> newArticles){
         articles.addAll(newArticles);
+        notifyDataSetChanged();
+    }
+
+    public void deleteArticle(Article article){
+        articles.remove(article);
         notifyDataSetChanged();
     }
 
@@ -54,13 +62,15 @@ public class ArticleAdapter extends BaseAdapter {
         ((TextView)view.findViewById(R.id.txt_title)).setText(articles.get(i).getTitle());
         ((TextView)view.findViewById(R.id.txt_abstract)).setText(articles.get(i).getResume());
         ((ImageView)view.findViewById(R.id.img_thumbnail)).setImageBitmap(articles.get(i).getThubnail().getImg());
-        if(((LogContext)viewGroup.getContext().getApplicationContext()).getLoginToken()!=null){
+        LoginToken lt = ((LogContext)viewGroup.getContext().getApplicationContext()).getLoginToken();
+        if(lt!=null && articles.get(i).getUsername().equals(lt.getUsername())){
             view.findViewById(R.id.lay_loggedActions).setVisibility(View.VISIBLE);
             Button btn_confirmation = view.findViewById(R.id.btn_confirmation);
             btn_confirmation.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //TODO
+                    DeleteArticleTask dat = new DeleteArticleTask(MainActivity.mainAct,articles.get(i),ArticleAdapter.this);
+                    dat.execute();
                 }
             });
             Button btn_edit = view.findViewById(R.id.btn_edit);
