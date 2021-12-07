@@ -52,6 +52,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        FloatingActionButton btn_create = findViewById(R.id.fab_create);
+        btn_create.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mainAct,ArticleEditActivity.class);
+                intent.putExtra(ID_ARTICLE,"");
+                startActivity(intent);
+            }
+        });
+
         DownloadArticlesTask downloadArticles = new DownloadArticlesTask(this);
         downloadArticles.execute(new Integer [] {30});
 

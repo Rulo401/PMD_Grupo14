@@ -16,6 +16,7 @@ import java.net.UnknownServiceException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Properties;
 
 import upm.pmd.grupo14.common.Constants;
 import upm.pmd.grupo14.models.article.Article;
@@ -48,7 +49,7 @@ public class WebServices {
     public static List<Article> getArticles (int n){
         List<Article> articlesList = new LinkedList<>();
         try {
-            URL url = new URL(Constants.url+"/articles/"+n+"/200");
+            URL url = new URL(Constants.url+"/articles/"+n+"/0");
             URLConnection conn = url.openConnection();
             Gson gson = new Gson();
             InputStream in = conn.getInputStream();
@@ -85,7 +86,7 @@ public class WebServices {
         try {
             HttpURLConnection conn = (HttpURLConnection) new URL(Constants.url+"/article").openConnection();
             conn.setRequestMethod("POST");
-            conn.setRequestProperty("Authorization",login.getApitoken());
+            //conn.setRequestProperty("Authorization",login.getApitoken());
             conn.setRequestProperty("Content-type", "application/json");
             conn.setUseCaches(false);
             conn.setDoInput(true);
@@ -96,7 +97,9 @@ public class WebServices {
             dos.writeBytes(art_json);
             dos.flush();
             dos.close();
-            result = conn.getResponseCode()==200;
+            result = gson.fromJson(Utils.readInputStream(conn.getInputStream()), Properties.class).getProperty("status","0").equals("200");
+            //result = conn.getResponseCode()!=401;
+            System.out.println(result);
         }catch (Exception e){}
         return result;
     }

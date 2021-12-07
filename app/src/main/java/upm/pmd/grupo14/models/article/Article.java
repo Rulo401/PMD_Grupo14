@@ -1,5 +1,7 @@
 package upm.pmd.grupo14.models.article;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
 
 import upm.pmd.grupo14.common.Category;
@@ -7,8 +9,8 @@ import upm.pmd.grupo14.common.Category;
 public class Article {
 
     public Article(){
-        this.category=Category.None;
-    }
+        //this.category=Category.None;
+    } //TODO
     @SerializedName("id")
     private String id;
 
@@ -75,10 +77,10 @@ public class Article {
     }
 
     public Category getCategory() {
-        return category;
+        return category != null ? category : Category.None;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(@NonNull String category) {
         switch(category){
             case "National": this.category = Category.National;break;
             case "Economy": this.category = Category.Economy;break;

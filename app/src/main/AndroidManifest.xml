@@ -19,6 +19,9 @@
             android:name=".ArticleDetailActivity"
             android:exported="true" />
         <activity
+            android:name=".ArticleEditActivity"
+            android:exported="true" />
+        <activity
             android:name=".MainActivity"
             android:exported="true" >
             <intent-filter>

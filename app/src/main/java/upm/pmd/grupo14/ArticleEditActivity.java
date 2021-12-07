@@ -25,19 +25,21 @@ import upm.pmd.grupo14.util.WebServices;
 
 public class ArticleEditActivity extends AppCompatActivity {
 
-    private final EditText[] et = new EditText[]{(EditText)findViewById(R.id.txt_edit_title),
-            (EditText)findViewById(R.id.txt_edit_subtitle),
-            (EditText)findViewById(R.id.txt_edit_abstract),
-            (EditText)findViewById(R.id.txt_edit_body)};
+    private EditText[] et;
 
     public Bitmap bitmap;
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_article_edit);
+        et = new EditText[]{(EditText)findViewById(R.id.txt_edit_title),
+                (EditText)findViewById(R.id.txt_edit_subtitle),
+                (EditText)findViewById(R.id.txt_edit_abstract),
+                (EditText)findViewById(R.id.txt_edit_body)};
         Intent intent = getIntent();
-        if(intent.getStringExtra(MainActivity.ID_ARTICLE)!=null){
+        if(!intent.getStringExtra(MainActivity.ID_ARTICLE).equals("")){
             DownloadArticleEditTask doat = new DownloadArticleEditTask(this);
             doat.execute(new String[]{intent.getStringExtra(MainActivity.ID_ARTICLE)});
         }
@@ -69,13 +71,17 @@ public class ArticleEditActivity extends AppCompatActivity {
                     }
                 }
                 if(correct){
-                    lista.add("");
+                    lista.add(spCategory.getSelectedItem().toString());
                     if(bitmap!=null){
                         lista.add(ImageSerializer.imgToBase64String(bitmap));
                     }
 
                     UploadArticleTask uat = new UploadArticleTask(ArticleEditActivity.this);
-                    uat.execute(lista.toString());
+                    String [] prueba = new String [lista.size()];
+                    for (int i = 0; i < lista.size(); i++){
+                        prueba[i] = lista.get(i);
+                    }
+                    uat.execute(prueba);
                 }
             }
         });

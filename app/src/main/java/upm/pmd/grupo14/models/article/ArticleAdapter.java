@@ -79,6 +79,7 @@ public class ArticleAdapter extends BaseAdapter {
                 public void onClick(View view) {
                     Intent in = new Intent(viewGroup.getContext(), ArticleEditActivity.class);
                     in.putExtra(MainActivity.ID_ARTICLE,articles.get(i).getId());
+                    view.getContext().startActivity(in);
                 }
             });
             Button btn_delete = view.findViewById(R.id.btn_delete);
