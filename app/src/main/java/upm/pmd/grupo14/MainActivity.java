@@ -25,8 +25,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mainAct = this;
-
         LogContext lc = (LogContext) getApplicationContext();
+        lc.setLoginToken(Utils.getUserFromPreferences(mainAct));
 
         FloatingActionButton btn_log = findViewById(R.id.fab_log);
         if(lc.getLoginToken() != null){

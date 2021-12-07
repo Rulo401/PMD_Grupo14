@@ -8,9 +8,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 import upm.pmd.grupo14.MainActivity;
 import upm.pmd.grupo14.common.Constants;
+import upm.pmd.grupo14.models.login.LoginToken;
+import upm.pmd.grupo14.tasks.LoginThread;
 
 public class Utils {
 
@@ -28,6 +32,22 @@ public class Utils {
         }
         catch(IOException e){ System.err.println("Exception reading the input stream"); }
         return res;
+    }
+
+    public static LoginToken getUserFromPreferences(Activity act){
+        SharedPreferences pref = act.getApplicationContext().getSharedPreferences(Constants.PreferenceNames.CONNECTION_FILENAME, Context.MODE_PRIVATE);
+        if (!pref.contains(Constants.PreferenceNames.USERNAME) || !pref.contains(Constants.PreferenceNames.PASSWORD)){
+            return null;
+        }
+        String username = pref.getString(Constants.PreferenceNames.USERNAME,"");
+        String password = pref.getString(Constants.PreferenceNames.PASSWORD,"");
+        LoginToken token = new LoginToken(username,password);
+        if (token.signIn(act)){
+            return token;
+        }
+        else {
+            return null;
+        }
     }
 
     public static void saveUserInPreferences(Activity act, String username, String password){
