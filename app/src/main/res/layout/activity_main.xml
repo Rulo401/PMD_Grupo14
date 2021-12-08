@@ -50,6 +50,16 @@
         android:layout_gravity="left|bottom"
         android:layout_margin="16dp"
         android:clickable="true"
+        android:visibility="gone"
         app:srcCompat="@android:drawable/ic_input_add" />
+
+    <Spinner
+        android:id="@+id/spn_filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|top"
+        android:layout_marginHorizontal="5dp"
+        android:layout_marginVertical="10dp"
+        android:background="#FFFFFFFF" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

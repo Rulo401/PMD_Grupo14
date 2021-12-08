@@ -5,6 +5,7 @@ import android.app.AsyncNotedAppOp;
 import android.os.AsyncTask;
 import android.widget.ImageView;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import androidx.core.text.HtmlCompat;
 
@@ -33,7 +34,8 @@ public class DownloadArticleEditTask extends AsyncTask<String,Void,Article> {
 
         EditText title = act.findViewById(R.id.txt_edit_title);
         title.setText(art.getTitle());
-        //TODO Categoría
+        Spinner categories = act.findViewById(R.id.spn_categories);
+        categories.setSelection(art.getCategory().ordinal());
         EditText subtitle = act.findViewById(R.id.txt_edit_subtitle);
         subtitle.setText(art.getSubtitle());
         EditText resume = act.findViewById(R.id.txt_edit_abstract);

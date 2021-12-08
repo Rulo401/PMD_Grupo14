@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -33,7 +32,7 @@ public class ArticleAdapter extends BaseAdapter {
     }
 
     public void deleteArticle(Article article){
-        articles.remove(article);
+        articles.remove(article);//TODO
         notifyDataSetChanged();
     }
 
@@ -58,21 +57,27 @@ public class ArticleAdapter extends BaseAdapter {
         if(view==null){
             view = inflater.inflate(R.layout.article_row_layout,null);
         }
+        //Fill article info
         ((TextView)view.findViewById(R.id.txt_category)).setText(articles.get(i).getCategory().name());
         ((TextView)view.findViewById(R.id.txt_title)).setText(articles.get(i).getTitle());
         ((TextView)view.findViewById(R.id.txt_abstract)).setText(articles.get(i).getResume());
         ((ImageView)view.findViewById(R.id.img_thumbnail)).setImageBitmap(articles.get(i).getThubnail().getImg());
+        //If user is logged and the article is owned by the user, show buttons
         LoginToken lt = ((LogContext)viewGroup.getContext().getApplicationContext()).getLoginToken();
         if(lt!=null && articles.get(i).getUsername().equals(lt.getUsername())){
             view.findViewById(R.id.lay_loggedActions).setVisibility(View.VISIBLE);
+            //Confirmation button deletes the article.
             Button btn_confirmation = view.findViewById(R.id.btn_confirmation);
             btn_confirmation.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     DeleteArticleTask dat = new DeleteArticleTask(MainActivity.mainAct,articles.get(i),ArticleAdapter.this);
                     dat.execute();
+                    //TODO
                 }
             });
+
+            //Edit button throws an ArticleEditActivity
             Button btn_edit = view.findViewById(R.id.btn_edit);
             btn_edit.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -82,6 +87,8 @@ public class ArticleAdapter extends BaseAdapter {
                     view.getContext().startActivity(in);
                 }
             });
+
+            //Delete button show the confirmation button
             Button btn_delete = view.findViewById(R.id.btn_delete);
             btn_delete.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -90,6 +97,8 @@ public class ArticleAdapter extends BaseAdapter {
                 }
             });
         }
+
+        //Click on the article view to see the article details
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

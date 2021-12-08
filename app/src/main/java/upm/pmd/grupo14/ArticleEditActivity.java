@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import upm.pmd.grupo14.common.Category;
 import upm.pmd.grupo14.tasks.DownloadArticleEditTask;
 import upm.pmd.grupo14.tasks.DownloadOneArticleTask;
 import upm.pmd.grupo14.tasks.UploadArticleTask;
@@ -71,7 +72,7 @@ public class ArticleEditActivity extends AppCompatActivity {
                     }
                 }
                 if(correct){
-                    lista.add(spCategory.getSelectedItem().toString());
+                    lista.add(((Category) spCategory.getSelectedItem()).show(ArticleEditActivity.this));
                     if(bitmap!=null){
                         lista.add(ImageSerializer.imgToBase64String(bitmap));
                     }
