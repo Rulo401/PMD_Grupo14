@@ -49,15 +49,14 @@ public class WebServices {
     public static List<Article> getArticles (int n){
         List<Article> articlesList = new LinkedList<>();
         try {
-            URL url = new URL(Constants.url+"/articles/"+n+"/0");
+            URL url = new URL(Constants.url+"/articles/"+n+"/170");
             URLConnection conn = url.openConnection();
             Gson gson = new Gson();
             InputStream in = conn.getInputStream();
             articlesList = Arrays.asList(gson.fromJson(Utils.readInputStream(in), Article[].class));
             for (Article art : articlesList){
-                if (art.getThumbnail_data() != null && art.getThumbnail_media_type() != null){
-                    art.setThubnail(new Image(ImageSerializer.base64StringToImg(art.getThumbnail_data()),art.getThumbnail_media_type()));
-                    System.out.println();
+                if (art.getThumbnail_data() != null){
+                    art.setThumbnail(new Image(ImageSerializer.base64StringToImg(art.getThumbnail_data()),art.getThumbnail_media_type()));
                 }
             }
             in.close();
@@ -121,4 +120,21 @@ public class WebServices {
         return result;
     }
 
+    public static List<Article> getUpdates (String date){
+        List<Article> articlesList = new LinkedList<>();
+        try {
+            URL url = new URL(Constants.url+"/articlesFrom/"+date);
+            URLConnection conn = url.openConnection();
+            Gson gson = new Gson();
+            InputStream in = conn.getInputStream();
+            articlesList = Arrays.asList(gson.fromJson(Utils.readInputStream(in), Article[].class));
+            for (Article art : articlesList){
+                if (art.getThumbnail_data() != null){
+                    art.setThumbnail(new Image(ImageSerializer.base64StringToImg(art.getThumbnail_data()),art.getThumbnail_media_type()));
+                }
+            }
+            in.close();
+        }catch (Exception e){}
+        return articlesList;
+    }
 }

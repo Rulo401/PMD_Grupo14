@@ -8,7 +8,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import upm.pmd.grupo14.MainActivity;
@@ -64,5 +67,11 @@ public class Utils {
         editor.remove(Constants.PreferenceNames.USERNAME);
         editor.remove(Constants.PreferenceNames.PASSWORD);
         editor.commit();
+    }
+
+    public static String getCurrentDate(){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        return dtf.format(now);
     }
 }

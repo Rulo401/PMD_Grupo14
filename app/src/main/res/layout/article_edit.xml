@@ -1,68 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <EditText
         android:id="@+id/txt_edit_title"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="20dp"
         android:ems="10"
         android:hint="@string/txt_title"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:inputType="textPersonName" />
 
     <Spinner
         android:id="@+id/spn_categories"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="15dp"
-        android:layout_marginEnd="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_edit_title" />
+        android:layout_marginEnd="20dp" />
 
     <EditText
         android:id="@+id/txt_edit_subtitle"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="20dp"
         android:ems="10"
         android:hint="@string/txt_subtitle"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/spn_categories" />
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/txt_edit_abstract"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="20dp"
         android:ems="10"
         android:hint="@string/txt_abstract"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_edit_subtitle" />
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/txt_edit_body"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="40dp"
@@ -71,19 +58,15 @@
         android:gravity="start|top"
         android:hint="@string/txt_body"
         android:inputType="textMultiLine"
-        android:minHeight="120dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_edit_abstract" />
+        android:minHeight="120dp" />
 
     <LinearLayout
         android:id="@+id/image"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:background="#DA4949"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/txt_edit_body">
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/img_edit_image"
@@ -112,8 +95,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:background="#1B5CFF"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/image">
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/btn_cancel"
@@ -134,4 +116,4 @@
             android:text="@string/btn_submit" />
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

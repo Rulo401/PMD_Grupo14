@@ -3,6 +3,7 @@ package upm.pmd.grupo14;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.Notification;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import upm.pmd.grupo14.common.Category;
 import upm.pmd.grupo14.models.appContext.LogContext;
+import upm.pmd.grupo14.notifications.NotificationHandler;
 import upm.pmd.grupo14.tasks.DownloadArticlesTask;
 import upm.pmd.grupo14.util.Utils;
 

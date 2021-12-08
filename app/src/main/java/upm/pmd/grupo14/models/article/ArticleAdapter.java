@@ -61,7 +61,7 @@ public class ArticleAdapter extends BaseAdapter {
         ((TextView)view.findViewById(R.id.txt_category)).setText(articles.get(i).getCategory().name());
         ((TextView)view.findViewById(R.id.txt_title)).setText(articles.get(i).getTitle());
         ((TextView)view.findViewById(R.id.txt_abstract)).setText(articles.get(i).getResume());
-        ((ImageView)view.findViewById(R.id.img_thumbnail)).setImageBitmap(articles.get(i).getThubnail().getImg());
+        ((ImageView)view.findViewById(R.id.img_thumbnail)).setImageBitmap(articles.get(i).getThumbnail().getImg());
         //If user is logged and the article is owned by the user, show buttons
         LoginToken lt = ((LogContext)viewGroup.getContext().getApplicationContext()).getLoginToken();
         if(lt!=null && articles.get(i).getUsername().equals(lt.getUsername())){

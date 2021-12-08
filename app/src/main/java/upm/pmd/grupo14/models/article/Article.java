@@ -35,7 +35,7 @@ public class Article {
     @SerializedName("image_media_type")
     private String image_media_type;
 
-    @SerializedName("thumbnail_data")
+    @SerializedName("thumbnail_image")
     private String thumbnail_data;
 
     @SerializedName("thumbnail_media_type")
@@ -49,7 +49,7 @@ public class Article {
 
     private Image image;
 
-    private Image thubnail;
+    private Image thumbnail;
 
 
     public String getId() {
@@ -158,7 +158,7 @@ public class Article {
 
     public void setImage(Image image) { this.image = image; }
 
-    public Image getThubnail() { return thubnail != null ? thubnail : new Image(null,null); }
+    public Image getThumbnail() { return thumbnail != null ? thumbnail : new Image(null,null); }
 
-    public void setThubnail(Image thubnail) { this.thubnail = thubnail; }
+    public void setThumbnail(Image thumbnail) { this.thumbnail = thumbnail; }
 }

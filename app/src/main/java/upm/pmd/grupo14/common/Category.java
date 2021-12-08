@@ -5,7 +5,7 @@ import android.app.Activity;
 import upm.pmd.grupo14.R;
 
 public enum Category {
-    National,Economy,Sports,Technology,None;
+    National,Sports,Technology,Economy,None;
 
     public String show(Activity act){
         if(this == None) return "";
