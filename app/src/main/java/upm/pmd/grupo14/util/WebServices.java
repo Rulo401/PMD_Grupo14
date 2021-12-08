@@ -86,21 +86,23 @@ public class WebServices {
         try {
             HttpURLConnection conn = (HttpURLConnection) new URL(Constants.url+"/article").openConnection();
             conn.setRequestMethod("POST");
-            //conn.setRequestProperty("Authorization",login.getApitoken());
+            conn.setRequestProperty("Authorization",login.getApitoken());
             conn.setRequestProperty("Content-type", "application/json");
             conn.setUseCaches(false);
             conn.setDoInput(true);
             conn.setDoOutput(true);
+
             Gson gson = new Gson();
             String art_json = gson.toJson(article);
             DataOutputStream dos = new DataOutputStream(conn.getOutputStream());
             dos.writeBytes(art_json);
             dos.flush();
             dos.close();
-            result = gson.fromJson(Utils.readInputStream(conn.getInputStream()), Properties.class).getProperty("status","0").equals("200");
+            //conn.connect();
+            int a = conn.getResponseCode();
             //result = conn.getResponseCode()!=401;
-            System.out.println(result);
-        }catch (Exception e){}
+            System.out.println(a);
+        }catch (Exception e){e.printStackTrace();}
         return result;
     }
 
@@ -108,13 +110,14 @@ public class WebServices {
         boolean result = false;
         try {
             HttpURLConnection conn = (HttpURLConnection) new URL(Constants.url+"/article/"+article.getId()).openConnection();
-            conn.setRequestMethod("DEL");
+            conn.setRequestMethod("DELETE");
             conn.setRequestProperty("Authorization",login.getApitoken());
             conn.setUseCaches(false);
             conn.setDoInput(true);
             conn.setDoOutput(true);
+            //conn.connect();
             result = conn.getResponseCode()==200;
-        }catch (Exception e){}
+        }catch (Exception e){e.printStackTrace();}
         return result;
     }
 

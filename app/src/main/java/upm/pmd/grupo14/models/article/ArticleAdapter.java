@@ -93,7 +93,7 @@ public class ArticleAdapter extends BaseAdapter {
             btn_delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    view.findViewById(R.id.btn_confirmation).setVisibility(View.VISIBLE);
+                    btn_confirmation.setVisibility(View.VISIBLE);
                 }
             });
         }

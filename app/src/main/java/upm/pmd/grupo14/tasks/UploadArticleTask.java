@@ -13,9 +13,11 @@ import upm.pmd.grupo14.util.WebServices;
 public class UploadArticleTask extends AsyncTask<String,Void,Boolean> {
 
     private Activity act = null;
+    private String id;
 
-    public UploadArticleTask(Activity act){
+    public UploadArticleTask(Activity act, String id){
         this.act = act;
+        this.id = id;
     }
 
     @Override
@@ -29,6 +31,7 @@ public class UploadArticleTask extends AsyncTask<String,Void,Boolean> {
         if(strings.length == 6){
             art.setImage_data(strings[5]);
         }
+        if (!id.equals("")) art.setId(id);
         return WebServices.uploadArticle(art,((LogContext)act.getApplicationContext()).getLoginToken());
 
     }

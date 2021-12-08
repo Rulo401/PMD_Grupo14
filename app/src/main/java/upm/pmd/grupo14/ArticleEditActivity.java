@@ -1,19 +1,28 @@
 package upm.pmd.grupo14;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +35,7 @@ import upm.pmd.grupo14.util.WebServices;
 
 public class ArticleEditActivity extends AppCompatActivity {
 
+    private static final int CODE_OPEN_IMAGE = 10;
     private EditText[] et;
 
     public Bitmap bitmap;
@@ -72,12 +82,12 @@ public class ArticleEditActivity extends AppCompatActivity {
                     }
                 }
                 if(correct){
-                    lista.add(((Category) spCategory.getSelectedItem()).show(ArticleEditActivity.this));
+                    lista.add(Category.values()[spCategory.getSelectedItemPosition()].name());
                     if(bitmap!=null){
                         lista.add(ImageSerializer.imgToBase64String(bitmap));
                     }
 
-                    UploadArticleTask uat = new UploadArticleTask(ArticleEditActivity.this);
+                    UploadArticleTask uat = new UploadArticleTask(ArticleEditActivity.this,intent.getStringExtra(MainActivity.ID_ARTICLE));
                     String [] prueba = new String [lista.size()];
                     for (int i = 0; i < lista.size(); i++){
                         prueba[i] = lista.get(i);
@@ -91,9 +101,13 @@ public class ArticleEditActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent();
-
+                i.setAction(Intent.ACTION_GET_CONTENT);
+                i.addCategory(Intent.CATEGORY_OPENABLE);
+                i.setType("image/*");
+                startActivityForResult(i,CODE_OPEN_IMAGE);
             }
         });
+
         /*
         for(int i=0; i<et.length;i++){
             et[i].addTextChangedListener(new TextWatcher() {
@@ -116,5 +130,22 @@ public class ArticleEditActivity extends AppCompatActivity {
 
          */
 
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CODE_OPEN_IMAGE && resultCode == Activity.RESULT_OK) {
+            InputStream stream = null;
+            try {
+                stream = getContentResolver().openInputStream(data.getData());
+                Bitmap bitmap = BitmapFactory.decodeStream(stream);
+                ((ImageView) findViewById(R.id.img_edit_image)).setImageBitmap(bitmap);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } finally {
+                if (stream != null) try { stream.close();} catch (IOException e){ }
+            }
+        }
     }
 }
