@@ -33,7 +33,7 @@ public class Utils {
             res = result.toString();
             bf.close();
         }
-        catch(IOException e){ System.err.println("Exception reading the input stream"); }
+        catch(IOException e){}
         return res;
     }
 

@@ -2,12 +2,16 @@ package upm.pmd.grupo14.models.article;
 
 import android.content.Context;
 import android.content.Intent;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.LinkedList;
@@ -17,9 +21,12 @@ import upm.pmd.grupo14.ArticleDetailActivity;
 import upm.pmd.grupo14.ArticleEditActivity;
 import upm.pmd.grupo14.MainActivity;
 import upm.pmd.grupo14.R;
+import upm.pmd.grupo14.common.Category;
+import upm.pmd.grupo14.common.Constants;
 import upm.pmd.grupo14.models.appContext.LogContext;
 import upm.pmd.grupo14.models.login.LoginToken;
 import upm.pmd.grupo14.tasks.DeleteArticleTask;
+import upm.pmd.grupo14.tasks.DownloadArticlesTask;
 
 public class ArticleAdapter extends BaseAdapter {
 
@@ -28,11 +35,6 @@ public class ArticleAdapter extends BaseAdapter {
 
     public void addArticles(List<Article> newArticles){
         articles.addAll(newArticles);
-        notifyDataSetChanged();
-    }
-
-    public void deleteArticle(Article article){
-        articles.remove(article);//TODO
         notifyDataSetChanged();
     }
 
@@ -57,25 +59,35 @@ public class ArticleAdapter extends BaseAdapter {
         if(view==null){
             view = inflater.inflate(R.layout.article_row_layout,null);
         }
+        Article art = articles.get(i);
         //Fill article info
-        ((TextView)view.findViewById(R.id.txt_category)).setText(articles.get(i).getCategory().name());
-        ((TextView)view.findViewById(R.id.txt_title)).setText(articles.get(i).getTitle());
-        ((TextView)view.findViewById(R.id.txt_abstract)).setText(articles.get(i).getResume());
-        ((ImageView)view.findViewById(R.id.img_thumbnail)).setImageBitmap(articles.get(i).getThumbnail().getImg());
+        ((TextView)view.findViewById(R.id.txt_category)).setText(art.getCategory().name());
+        ((TextView)view.findViewById(R.id.txt_title)).setText(art.getTitle());
+        ((TextView)view.findViewById(R.id.txt_abstract)).setText(art.getResume());
+        ((ImageView)view.findViewById(R.id.img_thumbnail)).setImageBitmap(art.getThumbnail().getImg());
         //If user is logged and the article is owned by the user, show buttons
-        LoginToken lt = ((LogContext)viewGroup.getContext().getApplicationContext()).getLoginToken();
-        if(lt!=null && articles.get(i).getUsername().equals(lt.getUsername())){
+        LoginToken lt = ((LogContext)MainActivity.mainAct.getApplicationContext()).getLoginToken();
+        if(lt!=null && art.getUsername().equals(lt.getUsername())){
             view.findViewById(R.id.lay_loggedActions).setVisibility(View.VISIBLE);
+            LinearLayout lay_confirmation = view.findViewById(R.id.lay_confirmation);
             //Confirmation button deletes the article.
             Button btn_confirmation = view.findViewById(R.id.btn_confirmation);
             btn_confirmation.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    DeleteArticleTask dat = new DeleteArticleTask(MainActivity.mainAct,articles.get(i),ArticleAdapter.this);
+                    DeleteArticleTask dat = new DeleteArticleTask(MainActivity.mainAct,art,ArticleAdapter.this);
                     dat.execute();
-                    //TODO
                 }
             });
+            //Cancel button stops cancel.
+            Button btn_cancel = view.findViewById(R.id.btn_cancel_del);
+            btn_cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    lay_confirmation.setVisibility(View.GONE);
+                }
+            });
+
 
             //Edit button throws an ArticleEditActivity
             Button btn_edit = view.findViewById(R.id.btn_edit);
@@ -83,7 +95,7 @@ public class ArticleAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View view) {
                     Intent in = new Intent(viewGroup.getContext(), ArticleEditActivity.class);
-                    in.putExtra(MainActivity.ID_ARTICLE,articles.get(i).getId());
+                    in.putExtra(Constants.ID_ARTICLE,art.getId());
                     view.getContext().startActivity(in);
                 }
             });
@@ -93,9 +105,12 @@ public class ArticleAdapter extends BaseAdapter {
             btn_delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    btn_confirmation.setVisibility(View.VISIBLE);
+                    lay_confirmation.setVisibility(View.VISIBLE);
                 }
             });
+        }else{
+            view.findViewById(R.id.lay_loggedActions).setVisibility(View.GONE);
+            view.findViewById(R.id.lay_confirmation).setVisibility(View.GONE);
         }
 
         //Click on the article view to see the article details
@@ -103,7 +118,7 @@ public class ArticleAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 Intent in = new Intent(viewGroup.getContext(), ArticleDetailActivity.class);
-                in.putExtra(MainActivity.ID_ARTICLE,articles.get(i).getId());
+                in.putExtra(Constants.ID_ARTICLE,art.getId());
 
                 viewGroup.getContext().startActivity(in);
             }

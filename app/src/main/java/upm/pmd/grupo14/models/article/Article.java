@@ -8,9 +8,6 @@ import upm.pmd.grupo14.common.Category;
 
 public class Article {
 
-    public Article(){
-        //this.category=Category.None;
-    } //TODO
     @SerializedName("id")
     private String id;
 

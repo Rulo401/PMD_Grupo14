@@ -33,7 +33,7 @@ public class DownloadOneArticleTask extends AsyncTask<String,Void,Article> {
         TextView title = act.findViewById(R.id.txt_title_art);
         title.setText(art.getTitle());
         TextView catSub = act.findViewById(R.id.txt_CatSub);
-        catSub.setText(art.getCategory().name().toUpperCase(Locale.ROOT) + " - " +art.getSubtitle());
+        catSub.setText(art.getCategory().show(act).toUpperCase(Locale.ROOT) + " - " +art.getSubtitle());
         TextView resume = act.findViewById(R.id.txt_abstract_art);
         resume.setText(art.getResume());
         TextView body = act.findViewById(R.id.txt_body_art);

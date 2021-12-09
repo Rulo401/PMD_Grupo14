@@ -1,15 +1,19 @@
 package upm.pmd.grupo14;
 
+import androidx.activity.contextaware.OnContextAvailableListener;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.app.Notification;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -18,15 +22,15 @@ import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import upm.pmd.grupo14.common.Category;
+import upm.pmd.grupo14.common.Constants;
 import upm.pmd.grupo14.models.appContext.LogContext;
 import upm.pmd.grupo14.notifications.NotificationHandler;
 import upm.pmd.grupo14.tasks.DownloadArticlesTask;
 import upm.pmd.grupo14.util.Utils;
 
 public class MainActivity extends AppCompatActivity {
-    public static final String ID_ARTICLE = "id";
     public static Activity mainAct;
-    private static final int NUM_ARTICLES = 30;
+    public static final int NUM_ARTICLES = 30;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,17 +40,9 @@ public class MainActivity extends AppCompatActivity {
 
         //Autologin
         LogContext lc = (LogContext) getApplicationContext();
-        lc.setLoginToken(Utils.getUserFromPreferences(mainAct));
+        if(lc.getLoginToken() == null) lc.setLoginToken(Utils.getUserFromPreferences(mainAct));
 
         FloatingActionButton btn_log = findViewById(R.id.fab_log);
-        if(lc.getLoginToken() != null){
-            btn_log.setImageDrawable(getResources().getDrawable(R.drawable.ic_logout));
-            btn_log.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.clr_logOUT)));
-        }else{
-            btn_log.setImageDrawable(getResources().getDrawable(R.drawable.ic_login));
-            btn_log.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.clr_logIN)));
-        }
-
         btn_log.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -59,19 +55,18 @@ public class MainActivity extends AppCompatActivity {
                     btn_log.setImageDrawable(getResources().getDrawable(R.drawable.ic_login));
                     btn_log.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.clr_logIN)));
                     findViewById(R.id.fab_create).setVisibility(View.GONE);
+                    DownloadArticlesTask dat = new DownloadArticlesTask(mainAct);
+                    dat.execute(NUM_ARTICLES);
                 }
             }
         });
 
         FloatingActionButton btn_create = findViewById(R.id.fab_create);
-        if(lc.getLoginToken()!=null){
-            btn_create.setVisibility(View.VISIBLE);
-        }
         btn_create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mainAct,ArticleEditActivity.class);
-                intent.putExtra(ID_ARTICLE,"");
+                intent.putExtra(Constants.ID_ARTICLE,"");
                 startActivity(intent);
             }
         });
@@ -98,18 +93,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        
+
         DownloadArticlesTask downloadArticles = new DownloadArticlesTask(this);
         downloadArticles.execute(new Integer [] {NUM_ARTICLES});
-
-        ListView lv = findViewById(R.id.lv_articles);
-
-        ImageButton btn = findViewById(R.id.btn_menu);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
     }
 
     @Override
@@ -117,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         LogContext lc = (LogContext) getApplicationContext();
 
+        //TODO
         Toast.makeText(this, (lc.getLoginToken()!= null)?lc.getLoginToken().getApitoken(): "NULL", Toast.LENGTH_LONG).show();
 
         FloatingActionButton btn_log = findViewById(R.id.fab_log);

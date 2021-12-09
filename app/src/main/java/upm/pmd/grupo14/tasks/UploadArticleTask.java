@@ -28,8 +28,9 @@ public class UploadArticleTask extends AsyncTask<String,Void,Boolean> {
         art.setResume(strings[2]);
         art.setBody(strings[3]);
         art.setCategory(strings[4]);
-        if(strings.length == 6){
+        if(strings.length == 7){
             art.setImage_data(strings[5]);
+            art.setImage_media_type(strings[6]);
         }
         if (!id.equals("")) art.setId(id);
         return WebServices.uploadArticle(art,((LogContext)act.getApplicationContext()).getLoginToken());

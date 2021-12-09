@@ -49,7 +49,8 @@ public class WebServices {
     public static List<Article> getArticles (int n){
         List<Article> articlesList = new LinkedList<>();
         try {
-            URL url = new URL(Constants.url+"/articles/"+n+"/170");
+            //TODO desde el comienzo
+            URL url = new URL(Constants.url+"/articles/"+n+"/0");
             URLConnection conn = url.openConnection();
             Gson gson = new Gson();
             InputStream in = conn.getInputStream();
@@ -80,6 +81,7 @@ public class WebServices {
         return art;
     }
 
+    //TODO obtener codigo respuesta
     public static boolean uploadArticle (Article article, LoginToken login){
         boolean result = false;
         try {
@@ -101,10 +103,12 @@ public class WebServices {
             int a = conn.getResponseCode();
             //result = conn.getResponseCode()!=401;
             System.out.println(a);
+            result = true;
         }catch (Exception e){e.printStackTrace();}
         return result;
     }
 
+    //TODO obtener codigo respuesta
     public static boolean deleteArticle (Article article, LoginToken login){
         boolean result = false;
         try {
@@ -115,7 +119,7 @@ public class WebServices {
             conn.setDoInput(true);
             conn.setDoOutput(true);
             //conn.connect();
-            result = conn.getResponseCode()==200;
+            result = true;//conn.getResponseCode()==200;
         }catch (Exception e){e.printStackTrace();}
         return result;
     }

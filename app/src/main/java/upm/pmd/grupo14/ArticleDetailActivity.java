@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import upm.pmd.grupo14.common.Constants;
 import upm.pmd.grupo14.models.appContext.LogContext;
 import upm.pmd.grupo14.tasks.DownloadOneArticleTask;
 import upm.pmd.grupo14.util.Utils;
@@ -47,7 +48,7 @@ public class ArticleDetailActivity extends AppCompatActivity {
         });
 
         Intent i = this.getIntent();
-        String articleID = i.getStringExtra(MainActivity.ID_ARTICLE);
+        String articleID = i.getStringExtra(Constants.ID_ARTICLE);
 
         DownloadOneArticleTask task = new DownloadOneArticleTask(this);
         task.execute(new String[]{articleID});

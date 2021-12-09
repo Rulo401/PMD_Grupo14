@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import upm.pmd.grupo14.MainActivity;
 import upm.pmd.grupo14.R;
 import upm.pmd.grupo14.models.appContext.LogContext;
 import upm.pmd.grupo14.models.article.Article;
@@ -31,10 +32,11 @@ public class DeleteArticleTask extends AsyncTask<Void,Void,Boolean> {
     @Override
     protected void onPostExecute(Boolean aBoolean) {
         super.onPostExecute(aBoolean);
-        if(aBoolean){
-            ad.deleteArticle(art);
-        }
         String toastText = aBoolean ? act.getString(R.string.delete_okay) : act.getString(R.string.delete_wrong);
         Toast.makeText(act,toastText,Toast.LENGTH_SHORT).show();
+        if(aBoolean){
+            DownloadArticlesTask dat = new DownloadArticlesTask(MainActivity.mainAct);
+            dat.execute(MainActivity.NUM_ARTICLES);
+        }
     }
 }

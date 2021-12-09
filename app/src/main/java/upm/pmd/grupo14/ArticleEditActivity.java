@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import upm.pmd.grupo14.common.Category;
+import upm.pmd.grupo14.common.Constants;
 import upm.pmd.grupo14.tasks.DownloadArticleEditTask;
 import upm.pmd.grupo14.tasks.DownloadOneArticleTask;
 import upm.pmd.grupo14.tasks.UploadArticleTask;
@@ -39,6 +40,7 @@ public class ArticleEditActivity extends AppCompatActivity {
     private EditText[] et;
 
     public Bitmap bitmap;
+    public String media_type;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +52,9 @@ public class ArticleEditActivity extends AppCompatActivity {
                 (EditText)findViewById(R.id.txt_edit_abstract),
                 (EditText)findViewById(R.id.txt_edit_body)};
         Intent intent = getIntent();
-        if(!intent.getStringExtra(MainActivity.ID_ARTICLE).equals("")){
+        if(!intent.getStringExtra(Constants.ID_ARTICLE).equals("")){
             DownloadArticleEditTask doat = new DownloadArticleEditTask(this);
-            doat.execute(new String[]{intent.getStringExtra(MainActivity.ID_ARTICLE)});
+            doat.execute(new String[]{intent.getStringExtra(Constants.ID_ARTICLE)});
         }
         Spinner spCategory=findViewById(R.id.spn_categories);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.categories, android.R.layout.simple_spinner_dropdown_item);
@@ -83,11 +85,12 @@ public class ArticleEditActivity extends AppCompatActivity {
                 }
                 if(correct){
                     lista.add(Category.values()[spCategory.getSelectedItemPosition()].name());
-                    if(bitmap!=null){
+                    if(bitmap!=null && media_type!=null){
                         lista.add(ImageSerializer.imgToBase64String(bitmap));
+                        lista.add(media_type);
                     }
 
-                    UploadArticleTask uat = new UploadArticleTask(ArticleEditActivity.this,intent.getStringExtra(MainActivity.ID_ARTICLE));
+                    UploadArticleTask uat = new UploadArticleTask(ArticleEditActivity.this,intent.getStringExtra(Constants.ID_ARTICLE));
                     String [] prueba = new String [lista.size()];
                     for (int i = 0; i < lista.size(); i++){
                         prueba[i] = lista.get(i);
@@ -140,6 +143,9 @@ public class ArticleEditActivity extends AppCompatActivity {
             try {
                 stream = getContentResolver().openInputStream(data.getData());
                 Bitmap bitmap = BitmapFactory.decodeStream(stream);
+                ArticleEditActivity.this.bitmap = bitmap;
+                //TODO obtener media type desde galeria
+                ArticleEditActivity.this.media_type = "";
                 ((ImageView) findViewById(R.id.img_edit_image)).setImageBitmap(bitmap);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();

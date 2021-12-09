@@ -5,6 +5,8 @@
     <color name="clr_mainApp_variant">#FF5555</color>
     <color name="clr_background">#EEEEEE</color>
     <color name="clr_nameApp">#0000FF</color>
+    #Article row colors
+    <color name="clr_background_delete_color">#FFFFFF</color>
     #Article colors
     <color name="clr_title">#00FF00</color>
     <color name="clr_subtitle">#FF0000</color>

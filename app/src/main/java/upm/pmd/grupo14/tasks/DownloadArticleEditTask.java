@@ -44,6 +44,7 @@ public class DownloadArticleEditTask extends AsyncTask<String,Void,Article> {
         body.setText(HtmlCompat.fromHtml(art.getBody(), HtmlCompat.FROM_HTML_MODE_LEGACY));
         ImageView image = act.findViewById(R.id.img_edit_image);
         ((ArticleEditActivity)act).bitmap = art.getImage().getImg();
+        ((ArticleEditActivity)act).media_type = art.getImage().getMedia_type();
         image.setImageBitmap(((ArticleEditActivity)act).bitmap);
     }
 }

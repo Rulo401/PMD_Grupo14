@@ -36,7 +36,7 @@ public class LoginToken {
     }
 
     public synchronized boolean isLoginStillValid(){
-        //TODO
+        //TODO + solicitar nuevo api en los metodos que llaman al get
         return apitoken == null;
     }
 

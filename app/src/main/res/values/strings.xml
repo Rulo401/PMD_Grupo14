@@ -15,7 +15,7 @@
     <string name="btn_cancel">Cancel</string>
     <string name="btn_edit">Edit</string>
     <string name="btn_delete">Delete</string>
-    <string name="btn_confirmation">ARE YOU SURE MDFK</string>
+    <string name="btn_confirmation">ARE YOU SURE?</string>
     #Checkbox
     <string name="check_remindMe">Remind me</string>
     #Toast
