@@ -18,26 +18,28 @@ public class DownloadArticlesTask extends AsyncTask<Integer,Void, List<Article>>
 
     private Activity act = null;
     private Category cat = null;
+    private ArticleAdapter articleAdapter;
 
-    public DownloadArticlesTask(Activity act){ this.act = act; }
+    public DownloadArticlesTask(Activity act, ArticleAdapter articleAdapter){
+        this.act = act;
+        this.articleAdapter = articleAdapter;
+    }
 
-    public DownloadArticlesTask(Activity act, Category cat){
+    public DownloadArticlesTask(Activity act, Category cat, ArticleAdapter articleAdapter){
         this.act = act;
         this.cat = cat;
+        this.articleAdapter = articleAdapter;
     }
 
     @Override
     protected List<Article> doInBackground(Integer... ints) {
-        return (cat == null) ? WebServices.getArticles(ints[0],0) :
-                WebServices.getArticles(ints[0],0).stream().filter( art -> art.getCategory().equals(cat)).collect(Collectors.toList());
+        return (cat == null) ? WebServices.getArticles(ints[0], ints[1]) :
+                WebServices.getArticles(ints[0],ints[1]).stream().filter( art -> art.getCategory().equals(cat)).collect(Collectors.toList());
     }
 
     @Override
     protected void onPostExecute(List<Article> articles){
         super.onPostExecute(articles);
-        ListView lv = act.findViewById(R.id.lv_articles);
-        ArticleAdapter adapter = new ArticleAdapter();
-        adapter.addArticles(articles);
-        lv.setAdapter(adapter);
+        articleAdapter.addArticles(articles);
     }
 }

@@ -18,6 +18,7 @@ import androidx.core.text.HtmlCompat;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import upm.pmd.grupo14.ArticleDetailActivity;
 import upm.pmd.grupo14.ArticleEditActivity;
@@ -37,6 +38,17 @@ public class ArticleAdapter extends BaseAdapter {
 
     public void addArticles(List<Article> newArticles){
         articles.addAll(newArticles);
+        articles = articles.stream().distinct().collect(Collectors.toList());
+        notifyDataSetChanged();
+    }
+
+    public void deleteArticle( Article art){
+        articles.remove(art);
+        notifyDataSetChanged();
+    }
+
+    public void clearArticles(){
+        articles.clear();
         notifyDataSetChanged();
     }
 

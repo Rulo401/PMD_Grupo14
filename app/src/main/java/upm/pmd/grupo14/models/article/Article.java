@@ -158,4 +158,8 @@ public class Article {
     public Image getThumbnail() { return thumbnail != null ? thumbnail : new Image(null,null); }
 
     public void setThumbnail(Image thumbnail) { this.thumbnail = thumbnail; }
+
+    public boolean equals(Article article2){
+        return this.id != null && id.equals(article2.id);
+    }
 }

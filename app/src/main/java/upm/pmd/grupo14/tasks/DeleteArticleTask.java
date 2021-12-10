@@ -35,8 +35,7 @@ public class DeleteArticleTask extends AsyncTask<Void,Void,Boolean> {
         String toastText = aBoolean ? act.getString(R.string.delete_okay) : act.getString(R.string.delete_wrong);
         Toast.makeText(act,toastText,Toast.LENGTH_SHORT).show();
         if(aBoolean){
-            DownloadArticlesTask dat = new DownloadArticlesTask(MainActivity.mainAct);
-            dat.execute(MainActivity.NUM_ARTICLES);
+            ad.deleteArticle(art);
         }
     }
 }

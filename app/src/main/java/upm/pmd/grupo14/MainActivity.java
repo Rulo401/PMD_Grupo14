@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
@@ -24,6 +25,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import upm.pmd.grupo14.common.Category;
 import upm.pmd.grupo14.common.Constants;
 import upm.pmd.grupo14.models.appContext.LogContext;
+import upm.pmd.grupo14.models.article.ArticleAdapter;
 import upm.pmd.grupo14.notifications.NotificationHandler;
 import upm.pmd.grupo14.tasks.DownloadArticlesTask;
 import upm.pmd.grupo14.util.Utils;
@@ -31,33 +33,33 @@ import upm.pmd.grupo14.util.Utils;
 public class MainActivity extends AppCompatActivity {
     public static Activity mainAct;
     public static final int NUM_ARTICLES = 30;
+    private ArticleAdapter articleAdapter;
+    private int articleIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mainAct = this;
+        articleIndex = 0;
+        articleAdapter = new ArticleAdapter();
 
         //Autologin
         LogContext lc = (LogContext) getApplicationContext();
         if(lc.getLoginToken() == null) lc.setLoginToken(Utils.getUserFromPreferences(mainAct));
 
-        FloatingActionButton btn_log = findViewById(R.id.fab_log);
-        btn_log.setOnClickListener(new View.OnClickListener() {
+        ListView lv = findViewById(R.id.lv_articles);
+        lv.setAdapter(articleAdapter);
+        //TODO
+        lv.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
-            public void onClick(View view) {
-                if(lc.getLoginToken() == null){
-                    Intent i = new Intent(MainActivity.this, LoginActivity.class);
-                    startActivity(i);
-                }else{
-                    lc.setLoginToken(null);
-                    Utils.deleteUserInPreferences(MainActivity.this);
-                    btn_log.setImageDrawable(getResources().getDrawable(R.drawable.ic_login));
-                    btn_log.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.clr_logIN)));
-                    findViewById(R.id.fab_create).setVisibility(View.GONE);
-                    DownloadArticlesTask dat = new DownloadArticlesTask(mainAct);
-                    dat.execute(NUM_ARTICLES);
-                }
+            public void onScrollStateChanged(AbsListView absListView, int i) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int i, int i1, int i2) {
+
             }
         });
 
@@ -78,13 +80,11 @@ public class MainActivity extends AppCompatActivity {
         spCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if(i == 0){
-                    DownloadArticlesTask downloadArticles = new DownloadArticlesTask(MainActivity.this);
-                    downloadArticles.execute(new Integer [] {NUM_ARTICLES});
-                }else{
-                    DownloadArticlesTask downloadArticles = new DownloadArticlesTask(MainActivity.this, Category.values()[i-1]);
-                    downloadArticles.execute(new Integer [] {NUM_ARTICLES});
-                }
+                clearAdapter();
+                DownloadArticlesTask downloadArticles = (i==0) ? new DownloadArticlesTask(MainActivity.this, articleAdapter) :
+                                        new DownloadArticlesTask(MainActivity.this, Category.values()[i-1], articleAdapter);
+                downloadArticles.execute(new Integer [] {NUM_ARTICLES, articleIndex});
+                articleIndex += NUM_ARTICLES;
             }
 
             @Override
@@ -93,21 +93,29 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        
-
-        DownloadArticlesTask downloadArticles = new DownloadArticlesTask(this);
-        downloadArticles.execute(new Integer [] {NUM_ARTICLES});
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        LogContext lc = (LogContext) getApplicationContext();
-
-        //TODO
-        Toast.makeText(this, (lc.getLoginToken()!= null)?lc.getLoginToken().getApitoken(): "NULL", Toast.LENGTH_LONG).show();
-
         FloatingActionButton btn_log = findViewById(R.id.fab_log);
+        btn_log.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(lc.getLoginToken() == null){
+                    Intent i = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(i);
+                }else{
+                    lc.setLoginToken(null);
+                    Utils.deleteUserInPreferences(MainActivity.this);
+                    btn_log.setImageDrawable(getResources().getDrawable(R.drawable.ic_login));
+                    btn_log.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.clr_logIN)));
+                    findViewById(R.id.fab_create).setVisibility(View.GONE);
+                    spCategory.setSelection(0);
+                    clearAdapter();
+                    DownloadArticlesTask dat = new DownloadArticlesTask(mainAct, articleAdapter);
+                    dat.execute(new Integer[]{NUM_ARTICLES, articleIndex});
+                    articleIndex += NUM_ARTICLES;
+                }
+            }
+        });
+
+
         if(lc.getLoginToken() != null){
             btn_log.setImageDrawable(getResources().getDrawable(R.drawable.ic_logout));
             btn_log.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.clr_logOUT)));
@@ -117,5 +125,10 @@ public class MainActivity extends AppCompatActivity {
         }
         int visibility = (lc.getLoginToken()==null) ? View.GONE : View.VISIBLE;
         findViewById(R.id.fab_create).setVisibility(visibility);
+    }
+
+    private void clearAdapter(){
+        articleAdapter.clearArticles();
+        articleIndex = 0;
     }
 }
