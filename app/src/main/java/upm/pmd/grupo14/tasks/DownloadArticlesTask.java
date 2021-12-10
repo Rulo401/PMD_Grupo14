@@ -28,8 +28,8 @@ public class DownloadArticlesTask extends AsyncTask<Integer,Void, List<Article>>
 
     @Override
     protected List<Article> doInBackground(Integer... ints) {
-        return (cat == null) ? WebServices.getArticles(ints[0]) :
-                WebServices.getArticles(ints[0]).stream().filter( art -> art.getCategory().equals(cat)).collect(Collectors.toList());
+        return (cat == null) ? WebServices.getArticles(ints[0],0) :
+                WebServices.getArticles(ints[0],0).stream().filter( art -> art.getCategory().equals(cat)).collect(Collectors.toList());
     }
 
     @Override

@@ -8,148 +8,156 @@
     android:orientation="vertical"
     tools:context=".ArticleEditActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <include
+        layout="@layout/menu_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/clr_background">
+        android:layout_marginTop="45dp"
+        android:isScrollContainer="true">
 
-        <include
-            android:id="@+id/include"
-            layout="@layout/menu_bar"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:isScrollContainer="true"
-            app:layout_constraintTop_toBottomOf="@+id/include"
-            tools:layout_editor_absoluteX="0dp">
+            android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/scrollview_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:paddingHorizontal="15dp"
+                android:paddingVertical="20dp">
 
                 <EditText
                     android:id="@+id/txt_edit_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="20dp"
                     android:ems="10"
                     android:hint="@string/txt_title"
                     android:inputType="textPersonName" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="15dp"
+                android:paddingVertical="20dp">
 
                 <Spinner
                     android:id="@+id/spn_categories"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="20dp" />
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="15dp"
+                android:paddingVertical="20dp">
 
                 <EditText
                     android:id="@+id/txt_edit_subtitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="20dp"
                     android:ems="10"
                     android:hint="@string/txt_subtitle"
                     android:inputType="textPersonName" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="15dp"
+                android:paddingVertical="20dp">
 
                 <EditText
                     android:id="@+id/txt_edit_abstract"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="40dp"
-                    android:layout_marginEnd="20dp"
                     android:ems="10"
                     android:hint="@string/txt_abstract"
                     android:inputType="textPersonName" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="15dp"
+                android:paddingVertical="20dp">
 
                 <EditText
                     android:id="@+id/txt_edit_body"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="40dp"
-                    android:layout_marginEnd="20dp"
                     android:ems="10"
                     android:gravity="start|top"
                     android:hint="@string/txt_body"
                     android:inputType="textMultiLine"
                     android:minHeight="120dp" />
+            </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/image"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="#DA4949"
-                    android:orientation="horizontal"
-                    android:paddingTop="40dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingVertical="20dp">
 
-                    <ImageView
-                        android:id="@+id/img_edit_image"
-                        android:layout_width="250dp"
-                        android:layout_height="250dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="20dp"
-                        android:layout_weight="80"
-                        android:adjustViewBounds="true"
-                        android:maxWidth="250dp"
-                        android:maxHeight="250dp"
-                        tools:srcCompat="@tools:sample/avatars" />
+                <ImageView
+                    android:id="@+id/img_edit_image"
+                    android:layout_width="250dp"
+                    android:layout_height="250dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_weight="80"
+                    android:adjustViewBounds="true"
+                    android:background="@color/clr_mainApp_variant"
+                    android:cropToPadding="false"
+                    android:outlineSpotShadowColor="#000000"
+                    app:srcCompat="@android:drawable/ic_menu_camera" />
 
-                    <Button
-                        android:id="@+id/btn_img_sel"
-                        android:layout_width="125dp"
-                        android:layout_height="70dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginEnd="20dp"
-                        android:layout_weight="20"
-                        android:text="@string/btn_sel_img" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#1B5CFF"
-                    android:orientation="horizontal"
-                    android:paddingTop="40dp">
-
-                    <Button
-                        android:id="@+id/btn_cancel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginEnd="20dp"
-                        android:layout_weight="1"
-                        android:text="@string/btn_cancel" />
-
-                    <Button
-                        android:id="@+id/btn_submit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginEnd="20dp"
-                        android:layout_weight="1"
-                        android:text="@string/btn_submit" />
-                </LinearLayout>
+                <Button
+                    android:id="@+id/btn_img_sel"
+                    android:layout_width="125dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_weight="20"
+                    android:text="@string/btn_sel_img" />
 
             </LinearLayout>
-        </ScrollView>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingVertical="20dp">
+
+                <Button
+                    android:id="@+id/btn_cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_weight="1"
+                    android:text="@string/btn_cancel" />
+
+                <Button
+                    android:id="@+id/btn_submit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_weight="1"
+                    android:text="@string/btn_submit" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_log"

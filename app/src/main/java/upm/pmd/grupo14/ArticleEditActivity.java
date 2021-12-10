@@ -113,27 +113,24 @@ public class ArticleEditActivity extends AppCompatActivity {
             }
         });
 
-        /*
+
         for(int i=0; i<et.length;i++){
-            et[i].addTextChangedListener(new TextWatcher() {
+            EditText editText = et[i];
+            editText.addTextChangedListener(new TextWatcher() {
                 @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    this.
-                }
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
 
                 @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                }
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
 
                 @Override
                 public void afterTextChanged(Editable editable) {
-
+                    editText.setBackgroundColor(getResources().getColor(R.color.clr_background));
                 }
             });
         }
 
-         */
+
 
     }
     @Override
@@ -146,8 +143,8 @@ public class ArticleEditActivity extends AppCompatActivity {
                 stream = getContentResolver().openInputStream(data.getData());
                 Bitmap bitmap = BitmapFactory.decodeStream(stream);
                 ArticleEditActivity.this.bitmap = bitmap;
-                //TODO obtener media type desde galeria
-                ArticleEditActivity.this.media_type = "";
+                //TODO obtener  media type
+                ArticleEditActivity.this.media_type = "";//data.getType();
                 ((ImageView) findViewById(R.id.img_edit_image)).setImageBitmap(bitmap);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();

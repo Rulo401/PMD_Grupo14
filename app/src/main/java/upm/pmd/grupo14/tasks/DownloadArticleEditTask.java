@@ -42,9 +42,11 @@ public class DownloadArticleEditTask extends AsyncTask<String,Void,Article> {
         resume.setText(art.getResume()!=null ? HtmlCompat.fromHtml(art.getResume(), HtmlCompat.FROM_HTML_MODE_LEGACY) : "");
         EditText body = act.findViewById(R.id.txt_edit_body);
         body.setText(art.getBody()!=null ? HtmlCompat.fromHtml(art.getBody(), HtmlCompat.FROM_HTML_MODE_LEGACY) : "");
-        ImageView image = act.findViewById(R.id.img_edit_image);
-        ((ArticleEditActivity)act).bitmap = art.getImage().getImg();
-        ((ArticleEditActivity)act).media_type = art.getImage().getMedia_type();
-        image.setImageBitmap(((ArticleEditActivity)act).bitmap);
+        if(art.getImage().getImg() != null){
+            ImageView image = act.findViewById(R.id.img_edit_image);
+            ((ArticleEditActivity)act).bitmap = art.getImage().getImg();
+            ((ArticleEditActivity)act).media_type = art.getImage().getMedia_type();
+            image.setImageBitmap(((ArticleEditActivity)act).bitmap);
+        }
     }
 }
