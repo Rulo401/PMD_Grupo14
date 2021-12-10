@@ -14,6 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.core.text.HtmlCompat;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -61,9 +63,9 @@ public class ArticleAdapter extends BaseAdapter {
         }
         Article art = articles.get(i);
         //Fill article info
-        ((TextView)view.findViewById(R.id.txt_category)).setText(art.getCategory().name());
+        ((TextView)view.findViewById(R.id.txt_category)).setText(art.getCategory().show(MainActivity.mainAct));
         ((TextView)view.findViewById(R.id.txt_title)).setText(art.getTitle());
-        ((TextView)view.findViewById(R.id.txt_abstract)).setText(art.getResume());
+        ((TextView)view.findViewById(R.id.txt_abstract)).setText(art.getResume()!= null ? HtmlCompat.fromHtml(art.getResume(), HtmlCompat.FROM_HTML_MODE_LEGACY) : "");
         ((ImageView)view.findViewById(R.id.img_thumbnail)).setImageBitmap(art.getThumbnail().getImg());
         //If user is logged and the article is owned by the user, show buttons
         LoginToken lt = ((LogContext)MainActivity.mainAct.getApplicationContext()).getLoginToken();

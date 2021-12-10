@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import upm.pmd.grupo14.MainActivity;
 import upm.pmd.grupo14.R;
 import upm.pmd.grupo14.models.appContext.LogContext;
 import upm.pmd.grupo14.models.article.Article;
@@ -42,6 +43,8 @@ public class UploadArticleTask extends AsyncTask<String,Void,Boolean> {
         super.onPostExecute(aBoolean);
         if(aBoolean){
             act.finish();
+            DownloadArticlesTask dat = new DownloadArticlesTask(MainActivity.mainAct);
+            dat.execute(MainActivity.NUM_ARTICLES);
         }
         else{
             Toast.makeText(act, act.getResources().getText(R.string.upload_error), Toast.LENGTH_LONG).show();

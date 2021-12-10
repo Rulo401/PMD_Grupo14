@@ -39,9 +39,9 @@ public class DownloadArticleEditTask extends AsyncTask<String,Void,Article> {
         EditText subtitle = act.findViewById(R.id.txt_edit_subtitle);
         subtitle.setText(art.getSubtitle());
         EditText resume = act.findViewById(R.id.txt_edit_abstract);
-        resume.setText(art.getResume());
+        resume.setText(art.getResume()!=null ? HtmlCompat.fromHtml(art.getResume(), HtmlCompat.FROM_HTML_MODE_LEGACY) : "");
         EditText body = act.findViewById(R.id.txt_edit_body);
-        body.setText(HtmlCompat.fromHtml(art.getBody(), HtmlCompat.FROM_HTML_MODE_LEGACY));
+        body.setText(art.getBody()!=null ? HtmlCompat.fromHtml(art.getBody(), HtmlCompat.FROM_HTML_MODE_LEGACY) : "");
         ImageView image = act.findViewById(R.id.img_edit_image);
         ((ArticleEditActivity)act).bitmap = art.getImage().getImg();
         ((ArticleEditActivity)act).media_type = art.getImage().getMedia_type();
