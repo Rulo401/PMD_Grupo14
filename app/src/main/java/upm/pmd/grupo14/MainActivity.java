@@ -50,18 +50,6 @@ public class MainActivity extends AppCompatActivity {
 
         ListView lv = findViewById(R.id.lv_articles);
         lv.setAdapter(articleAdapter);
-        //TODO
-        lv.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView absListView, int i) {
-
-            }
-
-            @Override
-            public void onScroll(AbsListView absListView, int i, int i1, int i2) {
-
-            }
-        });
 
         FloatingActionButton btn_create = findViewById(R.id.fab_create);
         btn_create.setOnClickListener(new View.OnClickListener() {
@@ -90,6 +78,26 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
+            }
+        });
+
+        clearAdapter();
+
+        //TODO
+        lv.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int i, int i1, int i2) {
+                if(i2 <= i + i1){
+                    DownloadArticlesTask downloadArticles = (spCategory.getSelectedItemPosition()==0) ? new DownloadArticlesTask(MainActivity.this, articleAdapter) :
+                            new DownloadArticlesTask(MainActivity.this, Category.values()[spCategory.getSelectedItemPosition()-1], articleAdapter);
+                    downloadArticles.execute(new Integer [] {NUM_ARTICLES, articleIndex});
+                    articleIndex += NUM_ARTICLES;
+                }
             }
         });
 

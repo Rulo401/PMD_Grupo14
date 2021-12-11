@@ -57,9 +57,9 @@
         android:id="@+id/spn_filter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right|top"
-        android:layout_marginHorizontal="5dp"
-        android:layout_marginVertical="10dp"
-        android:background="#FFFFFFFF" />
+        android:layout_gravity="center_horizontal|top"
+        android:layout_marginHorizontal="70dp"
+        android:layout_marginVertical="0dp"
+        style="@style/Widget.AppCompat.DropDownItem.Spinner" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

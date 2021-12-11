@@ -11,6 +11,8 @@
     <color name="clr_title">#00FF00</color>
     <color name="clr_subtitle">#FF0000</color>
     <color name="clr_category">#00FF00</color>
+    #Spinner colors
+    <color name="clr_spinner">#FFFFFF</color>
     #LoginButton colors
     <color name="clr_logIN">#00FF00</color>
     <color name="clr_logOUT">#FF0000</color>
