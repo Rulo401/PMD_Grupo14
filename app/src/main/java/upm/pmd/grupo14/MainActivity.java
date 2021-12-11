@@ -83,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
 
         clearAdapter();
 
-        //TODO
         lv.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView absListView, int i) {
@@ -126,10 +125,10 @@ public class MainActivity extends AppCompatActivity {
 
         if(lc.getLoginToken() != null){
             btn_log.setImageDrawable(getResources().getDrawable(R.drawable.ic_logout));
-            btn_log.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.clr_logOUT)));
+            btn_log.setSupportBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.clr_logOUT)));
         }else{
             btn_log.setImageDrawable(getResources().getDrawable(R.drawable.ic_login));
-            btn_log.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.clr_logIN)));
+            btn_log.setSupportBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.clr_logIN)));
         }
         int visibility = (lc.getLoginToken()==null) ? View.GONE : View.VISIBLE;
         findViewById(R.id.fab_create).setVisibility(visibility);

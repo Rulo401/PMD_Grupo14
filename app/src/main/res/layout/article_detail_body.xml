@@ -9,8 +9,8 @@
         android:id="@+id/txt_body_art"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textSize="12sp" />
+        android:textColor="@color/clr_body"
+        android:textSize="14sp" />
 
     <LinearLayout
         android:id="@+id/ImageUserDate"
@@ -22,12 +22,14 @@
             android:id="@+id/img_image_art"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_launcher_foreground" />
+            android:contentDescription="@string/txt_img_description_articleDetail"
+            android:scaleType="centerInside" />
 
         <LinearLayout
             android:id="@+id/UserDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal">
 
             <TextView
@@ -35,18 +37,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:text="TextView"
                 android:textAlignment="textStart"
-                android:textSize="10sp" />
+                android:textSize="11sp" />
 
             <TextView
                 android:id="@+id/txt_date_art"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:text="TextView"
                 android:textAlignment="textEnd"
-                android:textSize="10sp" />
+                android:textSize="11sp" />
         </LinearLayout>
 
     </LinearLayout>

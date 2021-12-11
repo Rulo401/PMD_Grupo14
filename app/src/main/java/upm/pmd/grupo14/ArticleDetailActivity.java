@@ -26,10 +26,10 @@ public class ArticleDetailActivity extends AppCompatActivity {
         FloatingActionButton btn_log = findViewById(R.id.fab_log);
         if(lc.getLoginToken() != null){
             btn_log.setImageDrawable(getResources().getDrawable(R.drawable.ic_logout));
-            btn_log.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.clr_logOUT)));
+            btn_log.setSupportBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.clr_logOUT)));
         }else{
             btn_log.setImageDrawable(getResources().getDrawable(R.drawable.ic_login));
-            btn_log.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.clr_logIN)));
+            btn_log.setSupportBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.clr_logIN)));
         }
 
         btn_log.setOnClickListener(new View.OnClickListener() {
@@ -42,7 +42,7 @@ public class ArticleDetailActivity extends AppCompatActivity {
                     lc.setLoginToken(null);
                     Utils.deleteUserInPreferences(ArticleDetailActivity.this);
                     btn_log.setImageDrawable(getResources().getDrawable(R.drawable.ic_login));
-                    btn_log.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.clr_logIN)));
+                    btn_log.setSupportBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.clr_logIN)));
                 }
             }
         });

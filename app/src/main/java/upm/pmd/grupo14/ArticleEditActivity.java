@@ -11,6 +11,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewOutlineProvider;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -47,21 +48,24 @@ public class ArticleEditActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_article_edit);
+
         et = new EditText[]{(EditText)findViewById(R.id.txt_edit_title),
                 (EditText)findViewById(R.id.txt_edit_subtitle),
                 (EditText)findViewById(R.id.txt_edit_abstract),
                 (EditText)findViewById(R.id.txt_edit_body)};
+
         Intent intent = getIntent();
         if(!intent.getStringExtra(Constants.ID_ARTICLE).equals("")){
             DownloadArticleEditTask doat = new DownloadArticleEditTask(this);
             doat.execute(new String[]{intent.getStringExtra(Constants.ID_ARTICLE)});
         }
+
         Spinner spCategory=findViewById(R.id.spn_categories);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.categories, android.R.layout.simple_spinner_dropdown_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spCategory.setAdapter(adapter);
+
         Button btn_cancel = findViewById(R.id.btn_cancel);
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,6 +73,7 @@ public class ArticleEditActivity extends AppCompatActivity {
                 ArticleEditActivity.this.finish();
             }
         });
+
         Button btn_submit = findViewById(R.id.btn_submit);
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,6 +106,7 @@ public class ArticleEditActivity extends AppCompatActivity {
                 }
             }
         });
+
         Button btn_img_sel = findViewById(R.id.btn_img_sel);
         btn_img_sel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,7 +118,6 @@ public class ArticleEditActivity extends AppCompatActivity {
                 startActivityForResult(i,CODE_OPEN_IMAGE);
             }
         });
-
 
         for(int i=0; i<et.length;i++){
             EditText editText = et[i];
@@ -129,10 +134,8 @@ public class ArticleEditActivity extends AppCompatActivity {
                 }
             });
         }
-
-
-
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 

@@ -10,6 +10,7 @@ import androidx.core.text.HtmlCompat;
 import java.util.Locale;
 
 import upm.pmd.grupo14.R;
+import upm.pmd.grupo14.common.Category;
 import upm.pmd.grupo14.models.article.Article;
 import upm.pmd.grupo14.util.WebServices;
 
@@ -33,7 +34,8 @@ public class DownloadOneArticleTask extends AsyncTask<String,Void,Article> {
         TextView title = act.findViewById(R.id.txt_title_art);
         title.setText(art.getTitle());
         TextView catSub = act.findViewById(R.id.txt_CatSub);
-        catSub.setText(art.getCategory().show(act).toUpperCase(Locale.ROOT) + " - " +art.getSubtitle());
+        catSub.setText(art.getCategory().equals(Category.None) ? art.getSubtitle() :
+                HtmlCompat.fromHtml("<b><font color=" + act.getResources().getColor(R.color.clr_category) + ">" + art.getCategory().show(act).toUpperCase(Locale.ROOT) + "</font></b> - " +art.getSubtitle(), HtmlCompat.FROM_HTML_MODE_LEGACY));
         TextView resume = act.findViewById(R.id.txt_abstract_art);
         resume.setText(art.getResume()!=null ? HtmlCompat.fromHtml(art.getResume(), HtmlCompat.FROM_HTML_MODE_LEGACY) : "");
         TextView body = act.findViewById(R.id.txt_body_art);

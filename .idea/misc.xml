@@ -13,10 +13,16 @@
         <entry key="..\:/Android/PMD_Grupo14/app/src/main/res/layout/layout_noticias.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/raulc/AndroidStudioProjects/PMD_Grupo14/app/src/main/res/drawable/ic_login.xml" value="0.2708333333333333" />
         <entry key="..\:/Users/raulc/AndroidStudioProjects/PMD_Grupo14/app/src/main/res/drawable/spinner_background.xml" value="0.2708333333333333" />
+        <entry key="..\:/Users/raulc/AndroidStudioProjects/PMD_Grupo14/app/src/main/res/layout/activity_article_detail.xml" value="0.23369565217391305" />
         <entry key="..\:/Users/raulc/AndroidStudioProjects/PMD_Grupo14/app/src/main/res/layout/activity_article_edit.xml" value="0.268" />
+        <entry key="..\:/Users/raulc/AndroidStudioProjects/PMD_Grupo14/app/src/main/res/layout/activity_login.xml" value="0.23369565217391305" />
         <entry key="..\:/Users/raulc/AndroidStudioProjects/PMD_Grupo14/app/src/main/res/layout/activity_main.xml" value="0.268" />
+        <entry key="..\:/Users/raulc/AndroidStudioProjects/PMD_Grupo14/app/src/main/res/layout/article_detail_body.xml" value="0.23369565217391305" />
+        <entry key="..\:/Users/raulc/AndroidStudioProjects/PMD_Grupo14/app/src/main/res/layout/article_detail_header.xml" value="0.23369565217391305" />
+        <entry key="..\:/Users/raulc/AndroidStudioProjects/PMD_Grupo14/app/src/main/res/layout/article_edit.xml" value="0.23369565217391305" />
         <entry key="..\:/Users/raulc/AndroidStudioProjects/PMD_Grupo14/app/src/main/res/layout/article_row_layout.xml" value="0.2513586956521739" />
         <entry key="..\:/Users/raulc/AndroidStudioProjects/PMD_Grupo14/app/src/main/res/layout/menu_bar.xml" value="0.2546875" />
+        <entry key="..\:/Users/raulc/AndroidStudioProjects/PMD_Grupo14/app/src/main/res/xml/default_text.xml" value="0.23369565217391305" />
       </map>
     </option>
   </component>

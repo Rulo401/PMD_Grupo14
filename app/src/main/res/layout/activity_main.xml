@@ -5,6 +5,7 @@
     android:id="@+id/CoordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/clr_background"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
@@ -16,8 +17,6 @@
         <include
             android:id="@+id/include"
             layout="@layout/menu_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -34,32 +33,39 @@
             app:layout_constraintVertical_bias="0.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_log"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right|bottom"
-        android:layout_margin="16dp"
-        android:clickable="true"
-        tools:ignore="SpeakableTextPresentCheck" />
+        android:layout_gravity="bottom|end"
+        android:orientation="vertical">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_create"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left|bottom"
-        android:layout_margin="16dp"
-        android:clickable="true"
-        android:visibility="gone"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_create"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:clickable="true"
+            app:backgroundTint="@color/clr_button"
+            app:srcCompat="@android:drawable/ic_input_add" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_log"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:clickable="true"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+    </LinearLayout>
 
     <Spinner
         android:id="@+id/spn_filter"
+        style="@style/Widget.AppCompat.Spinner.DropDown"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|top"
-        android:layout_marginHorizontal="70dp"
-        android:layout_marginVertical="0dp"
-        style="@style/Widget.AppCompat.DropDownItem.Spinner" />
+        android:layout_gravity="top|end"
+        android:layout_marginHorizontal="60dp"
+        android:layout_marginVertical="8.5dp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

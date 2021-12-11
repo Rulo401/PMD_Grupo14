@@ -8,6 +8,7 @@
     <string name="txt_abstract">Abstract</string>
     <string name="txt_category">Category</string>
     <string name="txt_body">Body</string>
+    <string name="txt_img_description_articleDetail">Article image</string>
     #Buttons
     <string name="action_sign_in">Sign in</string>
     <string name="btn_sel_img">Select Image</string>

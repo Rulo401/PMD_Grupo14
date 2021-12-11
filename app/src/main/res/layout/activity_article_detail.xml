@@ -5,13 +5,19 @@
     android:id="@+id/CoordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/clr_background"
     android:orientation="vertical"
     tools:context=".MainActivity">
+
+    <include
+        layout="@layout/menu_bar"
+        android:layout_width="match_parent" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="5dp">
+        android:layout_marginTop="60dp"
+        android:padding="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -26,9 +32,10 @@
             <View
                 android:id="@+id/divider_art"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginVertical="5dp"
-                android:background="?android:attr/listDivider" />
+                android:layout_height="2dp"
+                android:layout_marginVertical="8dp"
+                android:background="?android:attr/listDivider"
+                android:backgroundTint="@color/clr_mainApp" />
 
             <include
                 layout="@layout/article_detail_body"
