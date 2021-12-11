@@ -3,16 +3,18 @@ package upm.pmd.grupo14.services;
 import android.app.job.JobParameters;
 import android.app.job.JobService;
 
+import upm.pmd.grupo14.notifications.NotificationHandler;
 import upm.pmd.grupo14.tasks.NotificationThread;
 import upm.pmd.grupo14.util.Utils;
 
 public class ArticleUpdateJob extends JobService {
-    private static String lastUpdate = Utils.getCurrentDate();
+    public static String lastUpdate;
     @Override
     public boolean onStartJob(JobParameters jobParameters) {
-        Thread th = new Thread(new NotificationThread());
+        Thread th = new Thread(new NotificationThread(new NotificationHandler(this),lastUpdate));
         th.start();
         try { th.join(); } catch (InterruptedException e) { }
+        lastUpdate = Utils.getCurrentDate();
         UpdateScheduler.schedule(this);
         return false;
     }

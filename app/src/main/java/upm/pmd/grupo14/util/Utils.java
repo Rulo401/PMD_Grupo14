@@ -74,4 +74,9 @@ public class Utils {
         LocalDateTime now = LocalDateTime.now();
         return dtf.format(now);
     }
+
+    //TODO
+    public static long stringDatetoLong(String date){
+        return 1639256279000l;
+    }
 }

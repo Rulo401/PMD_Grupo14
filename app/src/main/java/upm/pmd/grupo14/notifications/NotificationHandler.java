@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.Person;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
@@ -16,112 +17,65 @@ import androidx.annotation.RequiresApi;
 
 import upm.pmd.grupo14.MainActivity;
 import upm.pmd.grupo14.R;
+import upm.pmd.grupo14.models.article.Article;
+import upm.pmd.grupo14.util.Utils;
 
 public class NotificationHandler extends ContextWrapper {
 
-    NotificationManager manager;
+    NotificationManager notificationManager;
 
-    public static final String highChannelID = "1";
-    public static final String highChannelName = "HIGH CHANNEL";
+    //Low channel
+    private static final String LOW_PRIORITY_ID = "lowPriorityChannel";
 
-    public static final String lowChannelID = "2";
-    public static final String lowChannelName = "LOW CHANNEL";
+    //High channel
+    private static final String HIGH_PRIORITY_ID = "highPriorityChannel";
 
-    // Grupo notification
-    public static final String groupSummary = "GRUPO";
-    public static final int groupID = 111;
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public NotificationHandler(Context base) {
         super(base);
         createChannels();
     }
 
-    public NotificationManager getManager() {
-        if (manager == null)
-            manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        return manager;
+    public NotificationManager getNotificationManager(){
+        if(notificationManager == null){
+            notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        }
+        return notificationManager;
+    }
+
+    //TODO icono app y pending intent
+    public Notification.Builder createNotification(int num, Article art){
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return createNotificationUnderO(num, art.getUpdate_date());
+        Notification.Builder notification = new Notification.Builder(this, HIGH_PRIORITY_ID)
+                .setSmallIcon(R.drawable.ic_newspaper)
+                .addPerson(new Person.Builder().setName(num + getResources().getString(R.string.not_number_articles)).build())
+                .setContentTitle(art.getTitle())
+                .setContentText(art.getResume())
+                .setWhen(Utils.stringDatetoLong(art.getUpdate_date()))
+                .setShowWhen(true);
+        if(art.getImage().getImg()!=null){
+            notification = notification.setLargeIcon(art.getImage().getImg());
+        }
+        return notification;
+    }
+
+    private Notification.Builder createNotificationUnderO(int num, String date){
+        return new Notification.Builder(this)
+                .setContentTitle(getResources().getString(R.string.notUnder26_title))
+                .setContentText(String.format(getResources().getString(R.string.notUnder26_text),num))
+                .setWhen(Utils.stringDatetoLong(date))
+                .setShowWhen(true);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void createChannels() {
-        // Creamos canales
-        NotificationChannel canalA = new NotificationChannel(highChannelID, highChannelName, NotificationManager.IMPORTANCE_HIGH);
-        NotificationChannel canalB = new NotificationChannel(lowChannelID, lowChannelName, NotificationManager.IMPORTANCE_LOW);
+    private void createChannels(){
+        NotificationChannel channelLow = new NotificationChannel(LOW_PRIORITY_ID,
+                "xD",NotificationManager.IMPORTANCE_LOW);
+        NotificationChannel channelHigh = new NotificationChannel(HIGH_PRIORITY_ID,
+                getResources().getString(R.string.notChannel_new_article),NotificationManager.IMPORTANCE_HIGH);
+        channelHigh.setDescription(getResources().getString(R.string.notChannel_new_article_description));
 
-        // Configuramos canales (opcional)
-        canalA.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
-        canalA.setShowBadge(true);
-        canalB.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
-        // Crear canal de notificaciones en el manager
-        getManager().createNotificationChannel(canalA);
-        getManager().createNotificationChannel(canalB);
-    }
-
-    public Notification.Builder createNotification(String title, String msg, boolean priority) {
-        if (Build.VERSION.SDK_INT >= 26) {
-            if (priority) {
-                return createNotificationChannels(title, msg, highChannelID);
-            } else {
-                return createNotificationChannels(title, msg, lowChannelID);
-            }
-        } else
-            return createNotificationWithoutChannels(title, msg);
-
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private Notification.Builder createNotificationChannels(String title, String msg, String channel) {
-        Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.ic_login);
-
-        // Creamos el intent que va a lanzar el NewActivity
-        Intent intent = new Intent(this, MainActivity.class);
-        // Añadimos los valores de title y msg en el intent
-        intent.putExtra("Title", title);
-        intent.putExtra("Msg", msg);
-        //intent.putExtra("Image", image);
-        // Flags para configurar el intent
-        // NEW TASK Y CLEAR TASK para evitar volver a la aplication si no estuviera abierta
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        // Creamos el pendingintent
-        PendingIntent pit = PendingIntent.getActivity(this, 1, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-
-        // Crear Action
-        Icon icon = Icon.createWithResource(this, R.drawable.ic_launcher_background);
-        Notification.Action action = new Notification.Action.Builder(icon, "LANZAR", pit).build();
-
-
-        return new Notification.Builder(getApplicationContext(), channel)
-                .setSmallIcon(R.drawable.ic_launcher_background)
-                .setContentTitle(title)
-                .setAutoCancel(true)
-                .setGroup(groupSummary)
-                .setContentText(msg)
-                .setContentIntent(pit) // Añadimos el pendingIntent a la notificación
-                .setActions(action) // Añadimos la action creada
-                .setLargeIcon(image) //Imagen de contacto (similar)
-                //.setStyle(new Notification.BigPictureStyle().bigPicture(image).bigLargeIcon((Bitmap) null))// Estilo con imagen
-                .setStyle(new Notification.BigTextStyle().bigText(msg))// Estilo con texto grande
-                ;
-
-    }
-
-    private Notification.Builder createNotificationWithoutChannels(String title, String msg) {
-        return new Notification.Builder(getApplicationContext())
-                .setSmallIcon(R.drawable.ic_launcher_background)
-                .setContentTitle(title)
-                .setContentText(msg);
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public void createGroup(boolean priority) {
-        String canal = highChannelID;
-        if (!priority)
-            canal = lowChannelID;
-        Notification grupo = new Notification.Builder(this, canal)
-                .setGroupSummary(true)
-                .setGroup(groupSummary)
-                .setSmallIcon(R.drawable.ic_launcher_foreground).build();
-        getManager().notify(groupID, grupo);
+        getNotificationManager().createNotificationChannel(channelLow);
+        getNotificationManager().createNotificationChannel(channelHigh);
     }
 }

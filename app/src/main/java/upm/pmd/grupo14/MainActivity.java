@@ -27,6 +27,8 @@ import upm.pmd.grupo14.common.Constants;
 import upm.pmd.grupo14.models.appContext.LogContext;
 import upm.pmd.grupo14.models.article.ArticleAdapter;
 import upm.pmd.grupo14.notifications.NotificationHandler;
+import upm.pmd.grupo14.services.ArticleUpdateJob;
+import upm.pmd.grupo14.services.UpdateScheduler;
 import upm.pmd.grupo14.tasks.DownloadArticlesTask;
 import upm.pmd.grupo14.util.Utils;
 
@@ -43,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
         mainAct = this;
         articleIndex = 0;
         articleAdapter = new ArticleAdapter();
+        //Service initialize
+        ArticleUpdateJob.lastUpdate = Utils.getCurrentDate();
+        UpdateScheduler.schedule(this);
 
         //Autologin
         LogContext lc = (LogContext) getApplicationContext();

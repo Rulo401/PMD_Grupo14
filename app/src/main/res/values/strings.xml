@@ -38,4 +38,10 @@
         <item>Technology</item>
         <item>Economy</item>
     </string-array>
+    #Notifications
+    <string name="notChannel_new_article">Articles</string>
+    <string name="notChannel_new_article_description">Update articles</string>
+    <string name="notUnder26_title">New articles are waiting you!</string>
+    <string name="notUnder26_text">There are %d new articles</string>
+    <string name="not_number_articles"> new articles</string>
 </resources>
