@@ -8,6 +8,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -75,8 +77,18 @@ public class Utils {
         return dtf.format(now);
     }
 
-    //TODO
-    public static long stringDatetoLong(String date){
-        return 1639256279000l;
+    public static long stringDateToLong(String date){
+        long milliseconds = 0l;
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try{
+            Date dateFormat = format.parse(date);
+            milliseconds = dateFormat.getTime();
+        } catch (ParseException e){}
+        return milliseconds;
+    }
+
+    public static String longDateToString(long date){
+        SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return form.format(new Date(date));
     }
 }

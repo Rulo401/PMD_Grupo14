@@ -43,5 +43,6 @@
     <string name="notChannel_new_article_description">Update articles</string>
     <string name="notUnder26_title">New articles are waiting you!</string>
     <string name="notUnder26_text">There are %d new articles</string>
-    <string name="not_number_articles"> new articles</string>
+    <string name="not_number_articles">new articles</string>
+    <string name="not_number_article_just_one">new article</string>
 </resources>

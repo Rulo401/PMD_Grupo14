@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         articleIndex = 0;
         articleAdapter = new ArticleAdapter();
         //Service initialize
+        ArticleUpdateJob.lastAccess = Utils.getCurrentDate();
         ArticleUpdateJob.lastUpdate = Utils.getCurrentDate();
         UpdateScheduler.schedule(this);
 

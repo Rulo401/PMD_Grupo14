@@ -18,6 +18,7 @@ import androidx.annotation.RequiresApi;
 import upm.pmd.grupo14.MainActivity;
 import upm.pmd.grupo14.R;
 import upm.pmd.grupo14.models.article.Article;
+import upm.pmd.grupo14.util.ImageSerializer;
 import upm.pmd.grupo14.util.Utils;
 
 public class NotificationHandler extends ContextWrapper {
@@ -43,34 +44,46 @@ public class NotificationHandler extends ContextWrapper {
         return notificationManager;
     }
 
-    //TODO icono app y pending intent
+    //TODO foto y person
     public Notification.Builder createNotification(int num, Article art){
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return createNotificationUnderO(num, art.getUpdate_date());
+
+        Intent i = new Intent(this, MainActivity.class);
+        PendingIntent pi = PendingIntent.getActivity(this, 1, i, PendingIntent.FLAG_UPDATE_CURRENT);
+
         Notification.Builder notification = new Notification.Builder(this, HIGH_PRIORITY_ID)
                 .setSmallIcon(R.drawable.ic_newspaper)
-                .addPerson(new Person.Builder().setName(num + getResources().getString(R.string.not_number_articles)).build())
+                .setSubText(num + " " + ((num == 1) ? getResources().getString(R.string.not_number_article_just_one) :
+                        getResources().getString(R.string.not_number_articles)))
                 .setContentTitle(art.getTitle())
                 .setContentText(art.getResume())
-                .setWhen(Utils.stringDatetoLong(art.getUpdate_date()))
-                .setShowWhen(true);
-        if(art.getImage().getImg()!=null){
-            notification = notification.setLargeIcon(art.getImage().getImg());
+                .setWhen(Utils.stringDateToLong(art.getUpdate_date()))
+                .setShowWhen(true)
+                .setContentIntent(pi);
+        if(art.getThumbnail_data()!=null){
+            notification = notification.setLargeIcon(ImageSerializer.base64StringToImg(art.getThumbnail_data()));
         }
         return notification;
     }
 
     private Notification.Builder createNotificationUnderO(int num, String date){
+        Intent i = new Intent(this, MainActivity.class);
+
+        PendingIntent pi = PendingIntent.getActivity(this, 1, i, PendingIntent.FLAG_UPDATE_CURRENT);
+
         return new Notification.Builder(this)
                 .setContentTitle(getResources().getString(R.string.notUnder26_title))
-                .setContentText(String.format(getResources().getString(R.string.notUnder26_text),num))
-                .setWhen(Utils.stringDatetoLong(date))
-                .setShowWhen(true);
+                .setContentText(String.format(((num == 1) ? getResources().getString(R.string.not_number_article_just_one) :
+                        getResources().getString(R.string.not_number_articles)),num))
+                .setWhen(Utils.stringDateToLong(date))
+                .setShowWhen(true)
+                .setContentIntent(pi);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void createChannels(){
         NotificationChannel channelLow = new NotificationChannel(LOW_PRIORITY_ID,
-                "xD",NotificationManager.IMPORTANCE_LOW);
+                "LC",NotificationManager.IMPORTANCE_LOW);
         NotificationChannel channelHigh = new NotificationChannel(HIGH_PRIORITY_ID,
                 getResources().getString(R.string.notChannel_new_article),NotificationManager.IMPORTANCE_HIGH);
         channelHigh.setDescription(getResources().getString(R.string.notChannel_new_article_description));

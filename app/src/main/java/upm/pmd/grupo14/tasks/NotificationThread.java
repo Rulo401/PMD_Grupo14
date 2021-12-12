@@ -9,19 +9,20 @@ import upm.pmd.grupo14.util.WebServices;
 public class NotificationThread implements Runnable{
 
     private NotificationHandler notificationHandler;
-    private String date;
+    private String lastUpdate;
+    private String lastAccess;
 
-    public NotificationThread(NotificationHandler notificationHandler, String date) {
+    public NotificationThread(NotificationHandler notificationHandler, String lastUpdate, String lastAccess) {
         this.notificationHandler = notificationHandler;
-        this.date = date;
+        this.lastUpdate = lastUpdate;
+        this.lastAccess = lastAccess;
     }
 
-    //TODO id
     @Override
     public void run() {
-        List<Article> articles = WebServices.getUpdates(date);
+        List<Article> articles = WebServices.getUpdates(lastUpdate);
         if(articles.size() > 0){
-            notificationHandler.getNotificationManager().notify(1,notificationHandler.createNotification(articles.size(), articles.get(0)).build());
+            notificationHandler.getNotificationManager().notify(1,notificationHandler.createNotification(WebServices.getUpdates(lastAccess).size(), articles.get(0)).build());
         }
     }
 }
