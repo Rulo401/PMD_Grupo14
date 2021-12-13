@@ -32,7 +32,7 @@ public class DownloadOneArticleTask extends AsyncTask<String,Void,Article> {
         super.onPostExecute(art);
 
         TextView title = act.findViewById(R.id.txt_title_art);
-        title.setText(art.getTitle());
+        title.setText(art.getTitle()!= null ? HtmlCompat.fromHtml(art.getTitle(), HtmlCompat.FROM_HTML_MODE_LEGACY) : "");
         TextView catSub = act.findViewById(R.id.txt_CatSub);
         catSub.setText(art.getCategory().equals(Category.None) ? art.getSubtitle() :
                 HtmlCompat.fromHtml("<b><font color=" + act.getResources().getColor(R.color.clr_category) + ">" + art.getCategory().show(act).toUpperCase(Locale.ROOT) + "</font></b> - " +art.getSubtitle(), HtmlCompat.FROM_HTML_MODE_LEGACY));

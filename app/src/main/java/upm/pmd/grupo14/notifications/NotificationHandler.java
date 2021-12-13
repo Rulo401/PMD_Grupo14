@@ -14,6 +14,7 @@ import android.graphics.drawable.Icon;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
+import androidx.core.text.HtmlCompat;
 
 import upm.pmd.grupo14.MainActivity;
 import upm.pmd.grupo14.R;
@@ -44,7 +45,6 @@ public class NotificationHandler extends ContextWrapper {
         return notificationManager;
     }
 
-    //TODO foto y person
     public Notification.Builder createNotification(int num, Article art){
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return createNotificationUnderO(num, art.getUpdate_date());
 
@@ -53,10 +53,11 @@ public class NotificationHandler extends ContextWrapper {
 
         Notification.Builder notification = new Notification.Builder(this, HIGH_PRIORITY_ID)
                 .setSmallIcon(R.drawable.ic_newspaper)
+                .setColor(getColor(R.color.clr_mainApp))
                 .setSubText(num + " " + ((num == 1) ? getResources().getString(R.string.not_number_article_just_one) :
                         getResources().getString(R.string.not_number_articles)))
-                .setContentTitle(art.getTitle())
-                .setContentText(art.getResume())
+                .setContentTitle(art.getTitle()!= null ? HtmlCompat.fromHtml(art.getTitle(), HtmlCompat.FROM_HTML_MODE_LEGACY) : "")
+                .setContentText(art.getResume()!= null ? HtmlCompat.fromHtml(art.getResume().length() < 240 ? art.getResume() : art.getResume().substring(0,241) + "...", HtmlCompat.FROM_HTML_MODE_LEGACY) : "")
                 .setWhen(Utils.stringDateToLong(art.getUpdate_date()))
                 .setShowWhen(true)
                 .setContentIntent(pi);

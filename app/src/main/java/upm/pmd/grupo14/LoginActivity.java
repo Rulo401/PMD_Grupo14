@@ -31,12 +31,12 @@ public class LoginActivity extends AppCompatActivity {
                 String password =((EditText) findViewById(R.id.password)).getText().toString();
                 boolean remindMe = ((CheckBox) findViewById(R.id.check_remindMe)).isChecked();
 
-                LoginToken token = new LoginToken(username, password);
+                LoginToken token = new LoginToken(username, null);
 
-                if(token.signIn(LoginActivity.this)){
+                if(token.signIn(LoginActivity.this, password)){
                     ((LogContext) getApplicationContext()).setLoginToken(token);
                     if(remindMe){
-                        Utils.saveUserInPreferences(LoginActivity.this,username, password);
+                        Utils.saveUserInPreferences(LoginActivity.this,username, token.getApitoken());
                     }
                     Intent i = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(i);

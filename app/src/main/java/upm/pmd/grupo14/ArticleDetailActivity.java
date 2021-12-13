@@ -24,7 +24,7 @@ public class ArticleDetailActivity extends AppCompatActivity {
         LogContext lc = (LogContext) getApplicationContext();
 
         FloatingActionButton btn_log = findViewById(R.id.fab_log);
-        if(lc.getLoginToken() != null){
+        if(lc.getLoginToken() != null && lc.getLoginToken().isLogged()){
             btn_log.setImageDrawable(getResources().getDrawable(R.drawable.ic_logout));
             btn_log.setSupportBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.clr_logOUT)));
         }else{

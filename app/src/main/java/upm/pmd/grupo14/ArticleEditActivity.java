@@ -146,8 +146,7 @@ public class ArticleEditActivity extends AppCompatActivity {
                 stream = getContentResolver().openInputStream(data.getData());
                 Bitmap bitmap = BitmapFactory.decodeStream(stream);
                 ArticleEditActivity.this.bitmap = bitmap;
-                //TODO obtener  media type
-                ArticleEditActivity.this.media_type = "";//data.getType();
+                ArticleEditActivity.this.media_type = "image/png";
                 ((ImageView) findViewById(R.id.img_edit_image)).setImageBitmap(bitmap);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();

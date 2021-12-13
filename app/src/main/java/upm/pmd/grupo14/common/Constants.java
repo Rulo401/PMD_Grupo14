@@ -7,8 +7,11 @@ public class Constants {
 
     public static class PreferenceNames{
         public static final String CONNECTION_FILENAME = "login";
-        public static final String USERNAME = "user";
-        public static final String PASSWORD = "pass";
+        public static final String USERNAME = "username";
+        public static final String APITOKEN = "apiToken";
+        public static final String NOTIFICATIONS_FILENAME = "notif";
+        public static final String LAST_ARTICLE_UPDATE = "lastUpdate";
+        public static final String LAST_CHECK_DATE = "lastCheck";
     }
 
 }

@@ -82,6 +82,7 @@ public class WebServices {
 
     public static boolean uploadArticle (Article article, LoginToken login){
         boolean result = false;
+        if(!login.isLogged()) return false;
         try {
             HttpURLConnection conn = (HttpURLConnection) new URL(Constants.url+"/article").openConnection();
             conn.setRequestMethod("POST");
@@ -97,21 +98,19 @@ public class WebServices {
             dos.writeBytes(art_json);
             dos.flush();
             dos.close();
-            result = conn.getResponseCode()!=401;
+            result = conn.getResponseCode()==200;
         }catch (Exception e){e.printStackTrace();}
         return result;
     }
 
     public static boolean deleteArticle (Article article, LoginToken login){
         boolean result = false;
+        if(!login.isLogged()) return false;
         try {
             HttpURLConnection conn = (HttpURLConnection) new URL(Constants.url+"/article/"+article.getId()).openConnection();
             conn.setRequestMethod("DELETE");
             conn.setRequestProperty("Authorization",login.getApitoken());
-            conn.setUseCaches(false);
-            conn.setDoInput(true);
-            conn.setDoOutput(true);
-            result = conn.getResponseCode()!=401;
+            result = conn.getResponseCode()==204;
         }catch (Exception e){e.printStackTrace();}
         return result;
     }

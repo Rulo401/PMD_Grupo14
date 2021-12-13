@@ -36,9 +36,14 @@ public class DownloadArticlesTask extends AsyncTask<Integer,Void, List<Article>>
 
     @Override
     protected List<Article> doInBackground(Integer... ints) {
-        ArticleUpdateJob.lastUpdate = Utils.getCurrentDate();
-        return (cat == null) ? WebServices.getArticles(ints[0], ints[1]) :
-                WebServices.getArticles(ints[0],ints[1]).stream().filter( art -> art.getCategory().equals(cat)).collect(Collectors.toList());
+        if(cat == null){
+            List<Article> result = WebServices.getArticles(ints[0], ints[1]);
+            if(ints[1] == 0){
+                Utils.saveDateInPreferences(act, result.get(0).getUpdate_date(), false);
+            }
+            return result;
+        }
+        return WebServices.getArticles(ints[0],ints[1]).stream().filter( art -> art.getCategory().equals(cat)).collect(Collectors.toList());
     }
 
     @Override

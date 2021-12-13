@@ -9,46 +9,36 @@ import java.util.concurrent.Semaphore;
 import upm.pmd.grupo14.tasks.LoginThread;
 
 public class LoginToken {
+
     private String username;
-    private String password;
-
     private String apitoken;
-    private String expDate;
 
-    public LoginToken(String username, String password){
+
+    public LoginToken(String username, String apitoken){
         this.username = username;
-        this.password = password;
-        apitoken = null;
-        expDate = null;
+        this.apitoken = apitoken;
     }
 
     public synchronized String getUsername() {
         return username;
     }
 
-    public synchronized void updateToken(String newApitoken, String newExpDate){
-        this.apitoken = newApitoken;
-        this.expDate = newExpDate;
+    public synchronized boolean isLogged(){
+        return username != null && apitoken != null;
     }
 
     public synchronized String getApitoken(){
         return apitoken;
     }
 
-    public synchronized boolean isLoginStillValid(){
-        //TODO + solicitar nuevo api en los metodos que llaman al get
-        return apitoken == null;
-    }
-
-    public synchronized boolean signIn(Activity act){
+    public synchronized boolean signIn(Activity act, String password){
         List<String> threadResult = new ArrayList<String>(2);
         LoginThread lt = new LoginThread(act, username, password, threadResult);
         Thread th = new Thread(lt);
         th.start();
         try { th.join(); } catch (InterruptedException e) {}
-        if(threadResult.size() == 2){
+        if(threadResult.size() == 1){
             apitoken = threadResult.get(0);
-            expDate = threadResult.get(1);
             return true;
         }
         return false;

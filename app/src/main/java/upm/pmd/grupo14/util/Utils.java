@@ -41,25 +41,17 @@ public class Utils {
 
     public static LoginToken getUserFromPreferences(Activity act){
         SharedPreferences pref = act.getApplicationContext().getSharedPreferences(Constants.PreferenceNames.CONNECTION_FILENAME, Context.MODE_PRIVATE);
-        if (!pref.contains(Constants.PreferenceNames.USERNAME) || !pref.contains(Constants.PreferenceNames.PASSWORD)){
-            return null;
-        }
+        if (!pref.contains(Constants.PreferenceNames.USERNAME) || !pref.contains(Constants.PreferenceNames.APITOKEN)) return null;
         String username = pref.getString(Constants.PreferenceNames.USERNAME,"");
-        String password = pref.getString(Constants.PreferenceNames.PASSWORD,"");
-        LoginToken token = new LoginToken(username,password);
-        if (token.signIn(act)){
-            return token;
-        }
-        else {
-            return null;
-        }
+        String apitoken = pref.getString(Constants.PreferenceNames.APITOKEN,"");
+        return new LoginToken(username, apitoken);
     }
 
-    public static void saveUserInPreferences(Activity act, String username, String password){
+    public static void saveUserInPreferences(Activity act, String username, String token){
         SharedPreferences pref = act.getApplicationContext().getSharedPreferences(Constants.PreferenceNames.CONNECTION_FILENAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         editor.putString(Constants.PreferenceNames.USERNAME, username);
-        editor.putString(Constants.PreferenceNames.PASSWORD, password);
+        editor.putString(Constants.PreferenceNames.APITOKEN, token);
         editor.commit();
     }
 
@@ -67,7 +59,7 @@ public class Utils {
         SharedPreferences pref = act.getApplicationContext().getSharedPreferences(Constants.PreferenceNames.CONNECTION_FILENAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         editor.remove(Constants.PreferenceNames.USERNAME);
-        editor.remove(Constants.PreferenceNames.PASSWORD);
+        editor.remove(Constants.PreferenceNames.APITOKEN);
         editor.commit();
     }
 
@@ -90,5 +82,17 @@ public class Utils {
     public static String longDateToString(long date){
         SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return form.format(new Date(date));
+    }
+
+    public static void saveDateInPreferences(Context ctx, String date, boolean last_check){
+        SharedPreferences pref = ctx.getApplicationContext().getSharedPreferences(Constants.PreferenceNames.NOTIFICATIONS_FILENAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString(last_check ? Constants.PreferenceNames.LAST_CHECK_DATE : Constants.PreferenceNames.LAST_ARTICLE_UPDATE, date);
+        editor.commit();
+    }
+
+    public static String[] getDatesFromPreferences(Context ctx){
+        SharedPreferences pref = ctx.getApplicationContext().getSharedPreferences(Constants.PreferenceNames.NOTIFICATIONS_FILENAME, Context.MODE_PRIVATE);
+        return new String[]{pref.getString(Constants.PreferenceNames.LAST_CHECK_DATE, Utils.getCurrentDate()), pref.getString(Constants.PreferenceNames.LAST_ARTICLE_UPDATE, Utils.getCurrentDate())};
     }
 }

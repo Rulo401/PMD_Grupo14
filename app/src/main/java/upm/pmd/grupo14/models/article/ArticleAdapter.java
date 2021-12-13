@@ -76,12 +76,12 @@ public class ArticleAdapter extends BaseAdapter {
         Article art = articles.get(i);
         //Fill article info
         ((TextView)view.findViewById(R.id.txt_category)).setText(art.getCategory().show(MainActivity.mainAct));
-        ((TextView)view.findViewById(R.id.txt_title)).setText(art.getTitle());
-        ((TextView)view.findViewById(R.id.txt_abstract)).setText(art.getResume()!= null ? HtmlCompat.fromHtml(art.getResume(), HtmlCompat.FROM_HTML_MODE_LEGACY) : "");
+        ((TextView)view.findViewById(R.id.txt_title)).setText(art.getTitle()!= null ? HtmlCompat.fromHtml(art.getTitle(), HtmlCompat.FROM_HTML_MODE_LEGACY) : "");
+        ((TextView)view.findViewById(R.id.txt_abstract)).setText(art.getResume()!= null ? HtmlCompat.fromHtml(art.getResume().length() < 240 ? art.getResume() : art.getResume().substring(0,241) + "...", HtmlCompat.FROM_HTML_MODE_LEGACY) : "");
         ((ImageView)view.findViewById(R.id.img_thumbnail)).setImageBitmap(art.getThumbnail().getImg());
         //If user is logged and the article is owned by the user, show buttons
         LoginToken lt = ((LogContext)MainActivity.mainAct.getApplicationContext()).getLoginToken();
-        if(lt!=null && art.getUsername().equals(lt.getUsername())){
+        if(lt!=null && lt.isLogged() && art.getUsername().equals(lt.getUsername())){
             view.findViewById(R.id.lay_loggedActions).setVisibility(View.VISIBLE);
             LinearLayout lay_confirmation = view.findViewById(R.id.lay_confirmation);
             //Confirmation button deletes the article.

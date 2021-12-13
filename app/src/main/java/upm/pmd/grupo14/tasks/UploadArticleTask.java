@@ -34,6 +34,9 @@ public class UploadArticleTask extends AsyncTask<String,Void,Boolean> {
         if(strings.length == 7){
             art.setImage_data(strings[5]);
             art.setImage_media_type(strings[6]);
+        }else{
+            art.setImage_data("");
+            art.setImage_media_type("");
         }
         if (!id.equals("")) art.setId(id);
         return WebServices.uploadArticle(art,((LogContext)act.getApplicationContext()).getLoginToken());

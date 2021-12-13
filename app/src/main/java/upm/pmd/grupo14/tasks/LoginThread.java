@@ -41,7 +41,6 @@ public class LoginThread implements Runnable{
                 String token = String.format("%s apikey=%s",
                         prop.getProperty("Authorization"),prop.getProperty("apikey"));
                 result.add(token);
-                result.add(prop.getProperty("expires"));
             }
         }catch (Exception e){}
     }

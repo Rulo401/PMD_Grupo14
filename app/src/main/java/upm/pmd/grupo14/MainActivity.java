@@ -46,8 +46,6 @@ public class MainActivity extends AppCompatActivity {
         articleIndex = 0;
         articleAdapter = new ArticleAdapter();
         //Service initialize
-        ArticleUpdateJob.lastAccess = Utils.getCurrentDate();
-        ArticleUpdateJob.lastUpdate = Utils.getCurrentDate();
         UpdateScheduler.schedule(this);
 
         //Autologin
@@ -129,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        if(lc.getLoginToken() != null){
+        if(lc.getLoginToken() != null && lc.getLoginToken().isLogged()){
             btn_log.setImageDrawable(getResources().getDrawable(R.drawable.ic_logout));
             btn_log.setSupportBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.clr_logOUT)));
         }else{
