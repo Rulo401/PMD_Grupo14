@@ -74,7 +74,6 @@ public class NewsDataSource {
         }
     }
 
-    //TODO
     public void addOneArticle(Article article){
         Cursor cursor = database.query(NewsDatabaseHelper.TABLE_ARTICLES, columns_detail,
                 NewsDatabaseHelper.COLUMN_ARTICLE_ID + "=" + article.getId(), null, null, null, null);
@@ -83,10 +82,26 @@ public class NewsDataSource {
             id = cursor.getString(0);
         }
         ContentValues values = new ContentValues();
-
+        values.put(NewsDatabaseHelper.COLUMN_ARTICLE_ID, article.getId());
+        values.put(NewsDatabaseHelper.COLUMN_TITLE, article.getId());
+        values.put(NewsDatabaseHelper.COLUMN_SUBTITLE, article.getSubtitle());
+        values.put(NewsDatabaseHelper.COLUMN_CATEGORY, article.getCategory().name());
+        values.put(NewsDatabaseHelper.COLUMN_RESUME, article.getResume());
+        values.put(NewsDatabaseHelper.COLUMN_BODY, article.getBody());
+        values.put(NewsDatabaseHelper.COLUMN_USER, article.getUsername());
+        values.put(NewsDatabaseHelper.COLUMN_UPDATE, Utils.stringDateToLong(article.getUpdate_date()));
+        if(article.getImage_data() != null){
+            values.put(NewsDatabaseHelper.COLUMN_IMAGE, article.getImage_data());
+            values.put(NewsDatabaseHelper.COLUMN_IMAGE_MEDIA, article.getImage_media_type());
+        }
+        if(article.getThumbnail_data() != null){
+            values.put(NewsDatabaseHelper.COLUMN_THUMBNAIL, article.getThumbnail_data());
+        }
         database.insert(NewsDatabaseHelper.TABLE_ARTICLES, id, values);
+    }
 
-
+    public void deleteArticle(Article article){
+        database.delete(NewsDatabaseHelper.TABLE_ARTICLES, NewsDatabaseHelper.COLUMN_ARTICLE_ID + "=" + article.getId(), null);
     }
 
     private Article cursorToArticle(Cursor cursor){
