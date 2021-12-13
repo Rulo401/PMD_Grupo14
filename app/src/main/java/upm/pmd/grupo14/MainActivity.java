@@ -33,8 +33,8 @@ import upm.pmd.grupo14.tasks.DownloadArticlesTask;
 import upm.pmd.grupo14.util.Utils;
 
 public class MainActivity extends AppCompatActivity {
+    public static final int NUM_ARTICLES = 20;
     public static Activity mainAct;
-    public static final int NUM_ARTICLES = 30;
     private ArticleAdapter articleAdapter;
     private int articleIndex;
 
@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Spinner spCategory=findViewById(R.id.spn_filter);
+        spCategory.setVisibility(View.VISIBLE);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.filter, android.R.layout.simple_spinner_dropdown_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spCategory.setAdapter(adapter);
@@ -86,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         clearAdapter();
-
         lv.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView absListView, int i) {
