@@ -5,12 +5,12 @@
     <color name="clr_mainApp_variant">#D0EC90</color>
     <color name="clr_background">#EEEEEE</color>
     <color name="clr_nameApp">#F0F0F0</color>
-    #Article row colors
+    #Article row colors B900B3
     <color name="clr_row_action_background">#FFFFFF</color>
-    <color name="clr_row_veil">#CBB3B3B3</color>
-    <color name="clr_row_divider">#34EAF7</color>
-    <color name="clr_row_category">#B03596</color>
-    <color name="clr_row_title">#8066C7</color>
+    <color name="clr_row_veil">#CCC4FCEF</color>
+    <color name="clr_row_divider">#135162</color>
+    <color name="clr_row_category">#008B74</color>
+    <color name="clr_row_title">#6835F7</color>
     #Article colors
     <color name="clr_title">#000000</color>
     <color name="clr_subtitle">#888888</color>

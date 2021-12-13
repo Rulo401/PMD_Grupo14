@@ -23,6 +23,8 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,10 +33,12 @@ import java.util.List;
 
 import upm.pmd.grupo14.common.Category;
 import upm.pmd.grupo14.common.Constants;
+import upm.pmd.grupo14.models.appContext.LogContext;
 import upm.pmd.grupo14.tasks.DownloadArticleEditTask;
 import upm.pmd.grupo14.tasks.DownloadOneArticleTask;
 import upm.pmd.grupo14.tasks.UploadArticleTask;
 import upm.pmd.grupo14.util.ImageSerializer;
+import upm.pmd.grupo14.util.Utils;
 import upm.pmd.grupo14.util.WebServices;
 
 public class ArticleEditActivity extends AppCompatActivity {
@@ -61,6 +65,16 @@ public class ArticleEditActivity extends AppCompatActivity {
             doat.execute(new String[]{intent.getStringExtra(Constants.ID_ARTICLE)});
         }
 
+        FloatingActionButton fab = findViewById(R.id.fab_log);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((LogContext) getApplicationContext()).setLoginToken(null);
+                Utils.deleteUserInPreferences(ArticleEditActivity.this);
+                Intent i = new Intent(ArticleEditActivity.this, MainActivity.class);
+                startActivity(i);
+            }
+        });
         Spinner spCategory=findViewById(R.id.spn_categories);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.categories, android.R.layout.simple_spinner_dropdown_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

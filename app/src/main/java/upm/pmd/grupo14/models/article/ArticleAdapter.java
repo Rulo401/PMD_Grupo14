@@ -2,6 +2,8 @@ package upm.pmd.grupo14.models.article;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -77,8 +79,9 @@ public class ArticleAdapter extends BaseAdapter {
         //Fill article info
         ((TextView)view.findViewById(R.id.txt_category)).setText(art.getCategory().show(MainActivity.mainAct));
         ((TextView)view.findViewById(R.id.txt_title)).setText(art.getTitle()!= null ? HtmlCompat.fromHtml(art.getTitle(), HtmlCompat.FROM_HTML_MODE_LEGACY) : "");
-        ((TextView)view.findViewById(R.id.txt_abstract)).setText(art.getResume()!= null ? HtmlCompat.fromHtml(art.getResume().length() < 240 ? art.getResume() : art.getResume().substring(0,241) + "...", HtmlCompat.FROM_HTML_MODE_LEGACY) : "");
-        ((ImageView)view.findViewById(R.id.img_thumbnail)).setImageBitmap(art.getThumbnail().getImg());
+        ((TextView)view.findViewById(R.id.txt_abstract)).setText(art.getResume()!= null ? HtmlCompat.fromHtml(art.getResume().length() < 100 ? art.getResume() : art.getResume().substring(0,101) + "...", HtmlCompat.FROM_HTML_MODE_LEGACY) : "");
+        view.findViewById(R.id.cv_article_row).setBackground(art.getThumbnail().getImg()!=null ? new BitmapDrawable(MainActivity.mainAct.getResources(), art.getThumbnail().getImg()) :
+                                                                    MainActivity.mainAct.getDrawable(R.drawable.pattern));
         //If user is logged and the article is owned by the user, show buttons
         LoginToken lt = ((LogContext)MainActivity.mainAct.getApplicationContext()).getLoginToken();
         if(lt!=null && lt.isLogged() && art.getUsername().equals(lt.getUsername())){

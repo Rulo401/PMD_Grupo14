@@ -79,10 +79,18 @@ public class Article {
 
     public void setCategory(@NonNull String category) {
         switch(category){
-            case "National": this.category = Category.National;break;
-            case "Economy": this.category = Category.Economy;break;
-            case "Sports": this.category = Category.Sports;break;
-            case "Technology": this.category = Category.Technology;break;
+            case "National":
+            case "Nacional":
+                this.category = Category.National;break;
+            case "Economy":
+            case "Economía":
+                this.category = Category.Economy;break;
+            case "Sports":
+            case "Deportes":
+                this.category = Category.Sports;break;
+            case "Technology":
+            case "Tecnología":
+                this.category = Category.Technology;break;
             default: this.category = Category.None;break;
         }
     }

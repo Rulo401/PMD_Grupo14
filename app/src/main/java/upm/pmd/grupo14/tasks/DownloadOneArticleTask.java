@@ -2,6 +2,7 @@ package upm.pmd.grupo14.tasks;
 
 import android.app.Activity;
 import android.os.AsyncTask;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,6 +21,12 @@ public class DownloadOneArticleTask extends AsyncTask<String,Void,Article> {
 
     public DownloadOneArticleTask(Activity act){
         this.act = act;
+    }
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        act.findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -46,5 +53,7 @@ public class DownloadOneArticleTask extends AsyncTask<String,Void,Article> {
         date.setText(art.getUpdate_date());
         ImageView image = act.findViewById(R.id.img_image_art);
         image.setImageBitmap(art.getImage().getImg());
+        act.findViewById(R.id.progressBar).setVisibility(View.INVISIBLE);
+        act.findViewById(R.id.lay_content).setVisibility(View.VISIBLE);
     }
 }
