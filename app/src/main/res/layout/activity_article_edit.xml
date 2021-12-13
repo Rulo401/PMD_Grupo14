@@ -10,8 +10,7 @@
     tools:context=".ArticleEditActivity">
 
     <include
-        layout="@layout/menu_bar"
-        android:layout_width="match_parent" />
+        layout="@layout/menu_bar" />
 
     <ScrollView
         android:layout_width="match_parent"

@@ -88,6 +88,7 @@ public class WebServices {
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Authorization",login.getApitoken());
             conn.setRequestProperty("Content-type", "application/json");
+            conn.setRequestProperty("Content-Language", "es-ES");
             conn.setRequestProperty("charset", "utf-8");
             conn.setUseCaches(false);
             conn.setDoInput(true);
