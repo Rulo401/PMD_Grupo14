@@ -6,7 +6,11 @@
     <color name="clr_background">#EEEEEE</color>
     <color name="clr_nameApp">#F0F0F0</color>
     #Article row colors
-    <color name="clr_background_delete_color">#FFFFFF</color>
+    <color name="clr_row_action_background">#FFFFFF</color>
+    <color name="clr_row_veil">#CBB3B3B3</color>
+    <color name="clr_row_divider">#34EAF7</color>
+    <color name="clr_row_category">#B03596</color>
+    <color name="clr_row_title">#8066C7</color>
     #Article colors
     <color name="clr_title">#000000</color>
     <color name="clr_subtitle">#888888</color>
