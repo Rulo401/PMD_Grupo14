@@ -11,13 +11,14 @@ import upm.pmd.grupo14.models.article.Article;
 import upm.pmd.grupo14.models.article.ArticleAdapter;
 import upm.pmd.grupo14.util.WebServices;
 
-
+/**
+ * The task that is responsable of deleting an article of the server and removing it from the list view
+ */
 public class DeleteArticleTask extends AsyncTask<Void,Void,Boolean> {
 
     private Article art;
     private Activity act;
     private ArticleAdapter ad;
-    //ADAPTER QUE CONTIENE LA LISTA DE LOS ARTICULOS
     /**
      * Constructor
      * @param act the Activity that invoke this task
