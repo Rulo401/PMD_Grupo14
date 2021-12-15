@@ -4,13 +4,9 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.Person;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Icon;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
@@ -22,22 +18,29 @@ import upm.pmd.grupo14.models.article.Article;
 import upm.pmd.grupo14.util.ImageSerializer;
 import upm.pmd.grupo14.util.Utils;
 
+/**
+ * Handler for creating and launching notifications.
+ */
 public class NotificationHandler extends ContextWrapper {
 
     NotificationManager notificationManager;
 
-    //Low channel
-    private static final String LOW_PRIORITY_ID = "lowPriorityChannel";
-
-    //High channel
+    //High priority channel
     private static final String HIGH_PRIORITY_ID = "highPriorityChannel";
 
-
+    /**
+     * Constructor that creates the notification channels.
+     * @param base Environment of the call
+     */
     public NotificationHandler(Context base) {
         super(base);
         createChannels();
     }
 
+    /**
+     * NotificationManager getter.
+     * @return NotificationManager
+     */
     public NotificationManager getNotificationManager(){
         if(notificationManager == null){
             notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -45,6 +48,12 @@ public class NotificationHandler extends ContextWrapper {
         return notificationManager;
     }
 
+    /**
+     * Builder method of a notification.
+     * @param num Number of pending articles
+     * @param art Last article uploaded
+     * @return Notification indicating the number of new articles and some info about the last article
+     */
     public Notification.Builder createNotification(int num, Article art){
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return createNotificationUnderO(num, art.getUpdate_date());
 
@@ -83,13 +92,9 @@ public class NotificationHandler extends ContextWrapper {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void createChannels(){
-        NotificationChannel channelLow = new NotificationChannel(LOW_PRIORITY_ID,
-                "LC",NotificationManager.IMPORTANCE_LOW);
         NotificationChannel channelHigh = new NotificationChannel(HIGH_PRIORITY_ID,
                 getResources().getString(R.string.notChannel_new_article),NotificationManager.IMPORTANCE_HIGH);
         channelHigh.setDescription(getResources().getString(R.string.notChannel_new_article_description));
-
-        getNotificationManager().createNotificationChannel(channelLow);
         getNotificationManager().createNotificationChannel(channelHigh);
     }
 }

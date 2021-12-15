@@ -1,12 +1,8 @@
 package upm.pmd.grupo14;
 
-import androidx.activity.contextaware.OnContextAvailableListener;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
-import android.app.Notification;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
@@ -14,11 +10,8 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -26,15 +19,13 @@ import upm.pmd.grupo14.common.Category;
 import upm.pmd.grupo14.common.Constants;
 import upm.pmd.grupo14.models.appContext.LogContext;
 import upm.pmd.grupo14.models.article.ArticleAdapter;
-import upm.pmd.grupo14.notifications.NotificationHandler;
-import upm.pmd.grupo14.services.ArticleUpdateJob;
 import upm.pmd.grupo14.services.UpdateScheduler;
 import upm.pmd.grupo14.tasks.DownloadArticlesTask;
 import upm.pmd.grupo14.util.Utils;
 
 public class MainActivity extends AppCompatActivity {
-    public static final int NUM_ARTICLES = 20;
-    public static Activity mainAct;
+    public static final int NUM_ARTICLES = 20; // Num of articles to be downloaded per connection
+    public static Activity mainAct; // Instance
     private ArticleAdapter articleAdapter;
     private int articleIndex;
 
@@ -42,19 +33,24 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Initialize attributes
         mainAct = this;
         articleIndex = 0;
         articleAdapter = new ArticleAdapter();
+
         //Service initialize
         UpdateScheduler.schedule(this);
 
-        //Autologin
+        //Autologin from preference if remind me
         LogContext lc = (LogContext) getApplicationContext();
         if(lc.getLoginToken() == null) lc.setLoginToken(Utils.getUserFromPreferences(mainAct));
 
+        //Setting the list adapter
         ListView lv = findViewById(R.id.lv_articles);
         lv.setAdapter(articleAdapter);
 
+        //Setting click listener for article create activity
         FloatingActionButton btn_create = findViewById(R.id.fab_create);
         btn_create.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,12 +61,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Setting spinner adapter
         Spinner spCategory=findViewById(R.id.spn_filter);
         spCategory.setVisibility(View.VISIBLE);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.filter, android.R.layout.simple_spinner_dropdown_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spCategory.setAdapter(adapter);
+        //Spinner item listener
         spCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            //Clears up the adapter and begin downloading articles when changing selection
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 clearAdapter();
@@ -85,14 +84,16 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
         clearAdapter();
+
+        //Setting list onScroll listener
         lv.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView absListView, int i) {
 
             }
 
+            //If scroll reaches the bottom of the list, download NUM_ARTICLES new articles
             @Override
             public void onScroll(AbsListView absListView, int i, int i1, int i2) {
                 if(i2 <= i + i1){
@@ -104,10 +105,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Setting onClick listener for login and logout
         FloatingActionButton btn_log = findViewById(R.id.fab_log);
         btn_log.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //If is not logged, launch a Login activity
+                //Else, deletes user in preferences and reloads the adapter
                 if(lc.getLoginToken() == null){
                     Intent i = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(i);
@@ -126,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        //Setting image and background of the log button depending on the log status
         if(lc.getLoginToken() != null && lc.getLoginToken().isLogged()){
             btn_log.setImageDrawable(getResources().getDrawable(R.drawable.ic_logout));
             btn_log.setSupportBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.clr_logOUT)));
@@ -134,6 +138,8 @@ public class MainActivity extends AppCompatActivity {
             btn_log.setImageDrawable(getResources().getDrawable(R.drawable.ic_login));
             btn_log.setSupportBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.clr_logIN)));
         }
+
+        //If user is logged in, shows the create article button
         int visibility = (lc.getLoginToken()==null) ? View.GONE : View.VISIBLE;
         findViewById(R.id.fab_create).setVisibility(visibility);
     }

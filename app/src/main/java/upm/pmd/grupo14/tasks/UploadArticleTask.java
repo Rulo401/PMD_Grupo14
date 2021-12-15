@@ -6,23 +6,34 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import upm.pmd.grupo14.LoginActivity;
 import upm.pmd.grupo14.MainActivity;
 import upm.pmd.grupo14.R;
 import upm.pmd.grupo14.models.appContext.LogContext;
 import upm.pmd.grupo14.models.article.Article;
 import upm.pmd.grupo14.util.WebServices;
 
+/**
+ * AsyncTask for uploading an article to the server.
+ */
 public class UploadArticleTask extends AsyncTask<String,Void,Boolean> {
 
     private Activity act = null;
     private String id;
 
+    /**
+     * Constructor
+     * @param act Activity that creates the task.
+     * @param id Article id
+     */
     public UploadArticleTask(Activity act, String id){
         this.act = act;
         this.id = id;
     }
 
+    /**
+     * Builds an article with the data receive as parameters and then upload it to the server.
+     * @return If the upload process was successfully
+     */
     @Override
     protected Boolean doInBackground(String... strings) {
         Article art = new Article();
@@ -43,6 +54,10 @@ public class UploadArticleTask extends AsyncTask<String,Void,Boolean> {
 
     }
 
+    /**
+     * Gives feedback to the user if the upload process could not be done, otherwise it returns
+     * to the main activity.
+     */
     @Override
     protected void onPostExecute(Boolean aBoolean) {
         super.onPostExecute(aBoolean);

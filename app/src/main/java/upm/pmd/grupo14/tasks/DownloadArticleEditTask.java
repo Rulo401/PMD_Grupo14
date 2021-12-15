@@ -1,7 +1,6 @@
 package upm.pmd.grupo14.tasks;
 
 import android.app.Activity;
-import android.app.AsyncNotedAppOp;
 import android.os.AsyncTask;
 import android.widget.ImageView;
 import android.widget.EditText;
@@ -9,25 +8,36 @@ import android.widget.Spinner;
 
 import androidx.core.text.HtmlCompat;
 
-import java.util.Locale;
-
 import upm.pmd.grupo14.ArticleEditActivity;
 import upm.pmd.grupo14.R;
 import upm.pmd.grupo14.models.article.Article;
 import upm.pmd.grupo14.util.WebServices;
 
+/**
+ * AsyncTask for downloading an article to edit its content.
+ */
 public class DownloadArticleEditTask extends AsyncTask<String,Void,Article> {
     private Activity act = null;
 
+    /**
+     * Constructor.
+     * @param act Activity where the task is created.
+     */
     public DownloadArticleEditTask(Activity act){
         this.act = act;
     }
 
+    /**
+     * Retrieves an article from the server, specified by the article id.
+     */
     @Override
     protected Article doInBackground(String... strings) {
         return WebServices.getArticle(strings[0]);
     }
 
+    /**
+     * Introduce the article data into its respective fields in the UI.
+     */
     @Override
     protected void onPostExecute(Article art){
         super.onPostExecute(art);
