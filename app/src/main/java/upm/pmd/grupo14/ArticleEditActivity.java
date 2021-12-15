@@ -140,6 +140,7 @@ public class ArticleEditActivity extends AppCompatActivity {
             }
         });
 
+        //bring back the natural color of the fileds 
         for(int i=0; i<et.length;i++){
             EditText editText = et[i];
             editText.addTextChangedListener(new TextWatcher() {
