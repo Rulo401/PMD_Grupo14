@@ -54,17 +54,21 @@ public class ArticleEditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_edit);
 
+        //Create the fields
         et = new EditText[]{(EditText)findViewById(R.id.txt_edit_title),
                 (EditText)findViewById(R.id.txt_edit_subtitle),
                 (EditText)findViewById(R.id.txt_edit_abstract),
                 (EditText)findViewById(R.id.txt_edit_body)};
-
+        
         Intent intent = getIntent();
+        //if the the Article has id, then we are editing the Article
+        //otherwise we are creating it
         if(!intent.getStringExtra(Constants.ID_ARTICLE).equals("")){
             DownloadArticleEditTask doat = new DownloadArticleEditTask(this);
             doat.execute(new String[]{intent.getStringExtra(Constants.ID_ARTICLE)});
         }
 
+        //the floating button for login/logout
         FloatingActionButton fab = findViewById(R.id.fab_log);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,43 +79,52 @@ public class ArticleEditActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        //a Spinner with all the different categories
         Spinner spCategory=findViewById(R.id.spn_categories);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.categories, android.R.layout.simple_spinner_dropdown_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spCategory.setAdapter(adapter);
 
+        //a cancel button
         Button btn_cancel = findViewById(R.id.btn_cancel);
         btn_cancel.setOnClickListener(new View.OnClickListener() {
+            //if clicked, back to the last activity (MainActivity)
             @Override
             public void onClick(View view) {
                 ArticleEditActivity.this.finish();
             }
         });
 
+        //the submit button, uploading (or updating) the Article to the server 
         Button btn_submit = findViewById(R.id.btn_submit);
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //list with all the parameters of the Article
                 List<String> lista = new ArrayList<String>();
                 boolean correct = true;
-                for (int i=0; i<et.length ;i++ ){
+                for (int i=0; i < et.length ;i++ ){
                     String text = et[i].getText().toString();
                     if(text.trim().equals("")){
                         correct=false;
+                        //mark with red all the fileds incompleted
                         et[i].setBackgroundColor(getResources().getColor(R.color.clr_wrong));
                     }
                     else{
                         lista.add(text);
                     }
                 }
+                //if all the fileds were completed, then all is correct
                 if(correct){
                     lista.add(Category.values()[spCategory.getSelectedItemPosition()].name());
+                    //check if the Article has an Image
                     if(bitmap!=null && media_type!=null){
                         lista.add(ImageSerializer.imgToBase64String(bitmap));
                         lista.add(media_type);
                     }
 
                     UploadArticleTask uat = new UploadArticleTask(ArticleEditActivity.this,intent.getStringExtra(Constants.ID_ARTICLE));
+                    //list to array (execute needs an array)
                     String [] prueba = new String [lista.size()];
                     for (int i = 0; i < lista.size(); i++){
                         prueba[i] = lista.get(i);
@@ -121,10 +134,12 @@ public class ArticleEditActivity extends AppCompatActivity {
             }
         });
 
+        //button for selecting an image from the gallery
         Button btn_img_sel = findViewById(R.id.btn_img_sel);
         btn_img_sel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //creates the intent (from ArticleEditActivity to the gallery)
                 Intent i = new Intent();
                 i.setAction(Intent.ACTION_GET_CONTENT);
                 i.addCategory(Intent.CATEGORY_OPENABLE);
@@ -157,6 +172,7 @@ public class ArticleEditActivity extends AppCompatActivity {
         if (requestCode == CODE_OPEN_IMAGE && resultCode == Activity.RESULT_OK) {
             InputStream stream = null;
             try {
+                //prepare the Image of the Article
                 stream = getContentResolver().openInputStream(data.getData());
                 Bitmap bitmap = BitmapFactory.decodeStream(stream);
                 ArticleEditActivity.this.bitmap = bitmap;
