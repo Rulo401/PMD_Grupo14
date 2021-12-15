@@ -7,7 +7,15 @@ import android.os.Build;
 import android.util.Base64;
 import java.io.ByteArrayOutputStream;
 
+/**
+ * Class containing the method for serializing and deserializing.
+ */
 public class ImageSerializer {
+    /**
+     * Deserialize an image from a String into a Bitmap.
+     * @param input String format of the image
+     * @return Bitmap format of the image
+     */
     @RequiresApi(api = Build.VERSION_CODES.FROYO)
     public static Bitmap base64StringToImg(String input)
     {
@@ -21,6 +29,11 @@ public class ImageSerializer {
         }
     }
 
+    /**
+     * Serialize an image from a Bitmap into a String.
+     * @param image Bitmap format of the image
+     * @return String format of the image
+     */
     @RequiresApi(api = Build.VERSION_CODES.FROYO)
     public static String imgToBase64String(Bitmap image)
     {
