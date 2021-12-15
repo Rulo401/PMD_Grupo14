@@ -15,25 +15,43 @@ import upm.pmd.grupo14.common.Category;
 import upm.pmd.grupo14.models.article.Article;
 import upm.pmd.grupo14.util.WebServices;
 
+/**
+ * Task to download one article
+ */
 public class DownloadOneArticleTask extends AsyncTask<String,Void,Article> {
 
     private Activity act = null;
 
+    /**
+     * Constructor
+     * @param act Where is going to take place
+     */
     public DownloadOneArticleTask(Activity act){
         this.act = act;
     }
 
+    /**
+     * Sets progress bar visibility to visible
+     */
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
         act.findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
     }
 
+    /**
+     * Asks the web service for an article 
+     * @return Article obtained
+     */
     @Override
     protected Article doInBackground(String... strings) {
         return WebServices.getArticle(strings[0]);
     }
 
+    /**
+     * Fills the layout for an article with all its data, and sets it to visible
+     * @param art Article from which the data is extracted
+     */
     @Override
     protected void onPostExecute(Article art){
         super.onPostExecute(art);

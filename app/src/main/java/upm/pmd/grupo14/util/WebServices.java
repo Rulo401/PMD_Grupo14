@@ -23,8 +23,18 @@ import upm.pmd.grupo14.models.article.Article;
 import upm.pmd.grupo14.models.article.Image;
 import upm.pmd.grupo14.models.login.LoginToken;
 
+/**
+ * Implements the web services of the app with RESTful methods
+ */
 public class WebServices {
 
+    /**
+     * POST method to set the connection with the servers using certain credentials
+     * @param uri Server url
+     * @param username Username
+     * @param password Password
+     * @return Exit status
+     */
     public static String login(String uri, String username, String password){
         String result = null;
         String format = "{\"username\":\"%s\",\"passwd\":\"%s\"}";
@@ -46,6 +56,12 @@ public class WebServices {
         return result;
     }
 
+    /**
+     * Receives a list of n articles from the server given the index
+     * @param number Number of articles to return
+     * @param from Position where start searching
+     * @return Articles received from the server
+     */
     public static List<Article> getArticles (int number, int from){
         List<Article> articlesList = new LinkedList<>();
         try {
@@ -64,6 +80,11 @@ public class WebServices {
         return articlesList;
     }
 
+    /**
+     * Receives one article given the id of an article
+     * @param id Id of the article requested
+     * @return Article with id requested
+     */
     public static Article getArticle (String id){
         Article art = null;
         try {
@@ -80,6 +101,12 @@ public class WebServices {
         return art;
     }
 
+    /**
+     * POST method to upload an article to the server if the login is correct
+     * @param article Article to upload
+     * @param login Login credentials
+     * @return Response code status
+     */
     public static boolean uploadArticle (Article article, LoginToken login){
         boolean result = false;
         if(!login.isLogged()) return false;
@@ -105,6 +132,12 @@ public class WebServices {
         return result;
     }
 
+    /**
+     * DELETE method to delete an article from the server if authorised
+     * @param article Article with id to delete
+     * @param login Login credentials
+     * @return Response code status
+     */
     public static boolean deleteArticle (Article article, LoginToken login){
         boolean result = false;
         if(!login.isLogged()) return false;
@@ -117,6 +150,11 @@ public class WebServices {
         return result;
     }
 
+    /**
+     * Method to obtain updates of the server from a certain date
+     * @param date Search for updates after this date
+     * @return Articles uploaded since date
+     */
     public static List<Article> getUpdates (String date){
         List<Article> articlesList = new LinkedList<>();
         try {

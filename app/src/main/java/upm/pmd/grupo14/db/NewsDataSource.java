@@ -12,6 +12,9 @@ import java.util.List;
 import upm.pmd.grupo14.models.article.Article;
 import upm.pmd.grupo14.util.Utils;
 
+/**
+ * Class to add and obtain data from the database
+ */
 public class NewsDataSource {
 
     private SQLiteDatabase database;
@@ -26,18 +29,34 @@ public class NewsDataSource {
             NewsDatabaseHelper.COLUMN_UPDATE,NewsDatabaseHelper.COLUMN_IMAGE,
             NewsDatabaseHelper.COLUMN_IMAGE_MEDIA};
 
+    /**
+     * Creates the helper for the database in the same context
+     * @param ctx Enviroment of the database
+     */
     public NewsDataSource(Context ctx){
         helper = new NewsDatabaseHelper(ctx);
     }
 
+    /**
+     * Opens the database
+     * @throws SQLException
+     */
     public void open() throws SQLException {
         database = helper.getWritableDatabase();
     }
 
+    /**
+     * Closes the database
+     */
     public void close(){
         database.close();
     }
 
+    /**
+     * Obtains one article information given the id 
+     * @param id Identity number of the article
+     * @return Filled with its information
+     */
     public Article getOneArticle(int id){
         Article article = new Article();
         Cursor cursor = database.query(NewsDatabaseHelper.TABLE_ARTICLES, columns_detail,
@@ -56,6 +75,12 @@ public class NewsDataSource {
         return article;
     }
 
+    /**
+     * Obtains a list of articles given an index of id, both included
+     * @param num Starting index id
+     * @param from Last index id
+     * @return Filled with all articles requested
+     */
     public List<Article> getArticles(int num, int from){
         List<Article> result = new ArrayList<Article>();
         Cursor cursor = database.query(NewsDatabaseHelper.TABLE_ARTICLES, columns_list,
@@ -68,12 +93,20 @@ public class NewsDataSource {
         return result;
     }
 
+    /**
+     * Inserts articles in the database
+     * @param articles Articles to fill with
+     */
     public void addArticles(List<Article> articles){
         for(Article article: articles){
             addOneArticle(article);
         }
     }
 
+    /**
+     * Inserts an article in the database
+     * @param article Information to fill each field of the database
+     */
     public void addOneArticle(Article article){
         Cursor cursor = database.query(NewsDatabaseHelper.TABLE_ARTICLES, columns_detail,
                 NewsDatabaseHelper.COLUMN_ARTICLE_ID + "=" + article.getId(), null, null, null, null);
@@ -100,10 +133,19 @@ public class NewsDataSource {
         database.insert(NewsDatabaseHelper.TABLE_ARTICLES, id, values);
     }
 
+    /**
+     * Deletes article from database, checking its id
+     * @param article To delete
+     */
     public void deleteArticle(Article article){
         database.delete(NewsDatabaseHelper.TABLE_ARTICLES, NewsDatabaseHelper.COLUMN_ARTICLE_ID + "=" + article.getId(), null);
     }
 
+    /**
+     * Fills an article information with the database fields
+     * @param cursor Pointer to a row of the table in the databse
+     * @return Filled with the information given from the cursor
+     */
     private Article cursorToArticle(Cursor cursor){
         Article article = new Article();
         article.setId(cursor.getString(1));

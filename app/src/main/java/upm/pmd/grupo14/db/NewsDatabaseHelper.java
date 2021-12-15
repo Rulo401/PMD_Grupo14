@@ -1,6 +1,5 @@
 package upm.pmd.grupo14.db;
 
-import android.app.TaskInfo;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -8,10 +7,9 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
-import java.util.List;
-
-import upm.pmd.grupo14.models.article.Article;
-
+/**
+ * Class that implements the database handler for the app, including column names and queries
+ */
 public class NewsDatabaseHelper extends SQLiteOpenHelper {
 
     public static final String DB_NAME= "char.db";
@@ -46,15 +44,29 @@ public class NewsDatabaseHelper extends SQLiteOpenHelper {
             COLUMN_IMAGE_MEDIA + OPT_FIELD_TYPE +");";
 
 
+    /**
+     * Constructor for the class
+     * @param context Enviroment of the database
+     */
     public NewsDatabaseHelper(@Nullable Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 
+    /**
+     * Executes the query to create the table of the database
+     * @param sqLiteDatabase Database where is going to be created
+     */
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(DB_CREATE);
     }
 
+    /**
+     * Upgrades the version of the database droping the old table and creating a new one
+     * @param sqLiteDatabase Database which is going to be upgraded
+     * @param oldVersion Old version number
+     * @param newVersion New version number
+     */
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
         Log.w(NewsDatabaseHelper.class.getName(),
