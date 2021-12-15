@@ -22,22 +22,28 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        //Sig-in button
         Button btn_sigIn = findViewById(R.id.login);
         btn_sigIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                String username =((EditText) findViewById(R.id.username)).getText().toString();
-                String password =((EditText) findViewById(R.id.password)).getText().toString();
+                //Credentials
+                String username = ((EditText) findViewById(R.id.username)).getText().toString();
+                String password = ((EditText) findViewById(R.id.password)).getText().toString();
+                //Remind me check box
                 boolean remindMe = ((CheckBox) findViewById(R.id.check_remindMe)).isChecked();
-
+                //The login token
                 LoginToken token = new LoginToken(username, null);
 
+                //if the user could sig in, then save the Login Token in the LogContext
+                //otherwise shows a Toast with invalid credentials
                 if(token.signIn(LoginActivity.this, password)){
                     ((LogContext) getApplicationContext()).setLoginToken(token);
+                    //if the check box is marked, save in preferences the username and api token
                     if(remindMe){
                         Utils.saveUserInPreferences(LoginActivity.this,username, token.getApitoken());
                     }
+                    //creates the intent and move to the main MainActivity
                     Intent i = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(i);
                 }else{
