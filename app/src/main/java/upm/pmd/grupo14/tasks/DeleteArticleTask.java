@@ -17,18 +17,32 @@ public class DeleteArticleTask extends AsyncTask<Void,Void,Boolean> {
     private Article art;
     private Activity act;
     private ArticleAdapter ad;
-
+    //ADAPTER QUE CONTIENE LA LISTA DE LOS ARTICULOS
+    /**
+     * Constructor
+     * @param act the Activity that invoke this task
+     * @param art the Article to delete from the server
+     * @param ad  the Adapter that contains the list of the Articles
+     */
     public DeleteArticleTask(Activity act, Article art, ArticleAdapter ad){
         this.act = act;
         this.art = art;
         this.ad = ad;
     }
+    /**
+     * deletes the Article art from the server if the user is logged
+     * and return true if the article was deleted from the server and false otherwise
+     */
     @Override
     protected Boolean doInBackground(Void... voids) {
         LogContext lc = (LogContext) act.getApplicationContext();
         return WebServices.deleteArticle(art,lc.getLoginToken());
     }
 
+    /**
+     * shows a Toast with a successful message if the server deleted the Article and a wrong
+     * message if the server couldn't delete it
+     */
     @Override
     protected void onPostExecute(Boolean aBoolean) {
         super.onPostExecute(aBoolean);
