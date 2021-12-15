@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="txt_username">Nombre de usuario</string>
+    <string name="txt_password">Contraseña</string>
+    <string name="txt_title">Título</string>
+    <string name="txt_subtitle">Subtitulo</string>
+    <string name="txt_abstract">Resumen</string>
+    <string name="txt_category">Categoria</string>
+    <string name="txt_body">Cuerpo</string>
+    <string name="txt_img_description_articleDetail">Imagen del articulo</string>
+    <string name="btn_sel_img">Seleccione imagen</string>
+    <string name="btn_submit">Subir</string>
+    <string name="btn_cancel">Cancelar</string>
+    <string name="btn_edit">Editar</string>
+    <string name="btn_delete">Borrar</string>
+    <string name="btn_confirmation">CONFIRMAR BORRADO</string>
+    <string name="check_remindMe">Recuerdame</string>
+    <string name="upload_error">Error subiendo el articulo. ¡Pruebe más tarde!</string>
+    <string name="invalid_credentials">Credenciales no válidas</string>
+    <string name="delete_okay">Borrado correctamente</string>
+    <string name="delete_wrong">No se ha podido borrar el artículo. ¡Pruebe más tarde!</string>
+    <string name="notChannel_new_article">Artículos</string>
+    <string name="notChannel_new_article_description">Actualizar artículos</string>
+    <string name="notUnder26_title">¡Hay nuevos artículos esperandote!</string>
+    <string name="notUnder26_text">Tienes %d artículos nuevos</string>
+    <string name="not_number_articles">artículos nuevos</string>
+    <string name="not_number_article_just_one">artículo nuevo</string>
+    <string name="action_sign_in">Iniciar sesión</string>
+</resources>
