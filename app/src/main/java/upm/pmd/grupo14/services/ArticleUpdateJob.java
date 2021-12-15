@@ -5,9 +5,16 @@ import android.app.job.JobService;
 
 import upm.pmd.grupo14.notifications.NotificationHandler;
 import upm.pmd.grupo14.tasks.NotificationThread;
-import upm.pmd.grupo14.util.Utils;
 
+/**
+ * Job to update an article
+ */
 public class ArticleUpdateJob extends JobService {
+    /**
+     * Starts a thread with a notification thread which carries a notification handler
+     * @param jobParameters Runtime parameters
+     * @return Exit status
+     */
     @Override
     public boolean onStartJob(JobParameters jobParameters) {
         Thread th = new Thread(new NotificationThread(this, new NotificationHandler(this)));
@@ -17,6 +24,10 @@ public class ArticleUpdateJob extends JobService {
         return false;
     }
 
+    /**
+     * @param jobParameters Runtime parameters
+     * @return Exit status
+     */
     @Override
     public boolean onStopJob(JobParameters jobParameters) {
         return false;
