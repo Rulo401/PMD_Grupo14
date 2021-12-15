@@ -33,42 +33,76 @@ import upm.pmd.grupo14.models.login.LoginToken;
 import upm.pmd.grupo14.tasks.DeleteArticleTask;
 import upm.pmd.grupo14.tasks.DownloadArticlesTask;
 
+/**
+ * ArticleAdapter model the Adapter of an Atricle
+ */
 public class ArticleAdapter extends BaseAdapter {
 
     List<Article> articles = new LinkedList<Article>();
 
-
+    /**
+     * adds newArticles to the list of Articles updating the view
+     * @param newArticles the articles to add
+     */
     public void addArticles(List<Article> newArticles){
         articles.addAll(newArticles);
         articles = articles.stream().distinct().collect(Collectors.toList());
         notifyDataSetChanged();
     }
 
-    public void deleteArticle( Article art){
+    /**
+     * deletes art to the list of Articles updating the view
+     * @param art the article to delete
+     */
+    public void deleteArticle(Article art){
         articles.remove(art);
         notifyDataSetChanged();
     }
 
+    /**
+     * clears all the articles of the list updating the view
+     */
     public void clearArticles(){
         articles.clear();
         notifyDataSetChanged();
     }
 
+    /**
+     * getter of the count
+     * @return return the amount of articles
+     */
     @Override
     public int getCount() {
         return articles.size();
     }
 
+    /**
+     * getter of an Article given an index
+     * @param i the index of the Article to search
+     * @return returns the Article which exisits in the index i
+     */
     @Override
     public Object getItem(int i) {
         return articles.get(i);
     }
 
+    /**
+     * get the row associated with the specified position in the list.
+     * @param i the index of the Article to search
+     * @return returns the row Article which exisits in the index i
+     */
     @Override
     public long getItemId(int i) {
         return i;
     }
 
+    /**
+     * get the view that displays the Article of the list at i 
+     * @param i position of the Article which will be display
+     * @param view the row
+     * @param viewGroup the list view
+     * @return the view which displays the Article of the list at the position i
+     */
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         LayoutInflater inflater = (LayoutInflater) viewGroup.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
