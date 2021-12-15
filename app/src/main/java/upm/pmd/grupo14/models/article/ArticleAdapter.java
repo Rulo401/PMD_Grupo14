@@ -3,17 +3,12 @@ package upm.pmd.grupo14.models.article;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.view.DragEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.core.text.HtmlCompat;
@@ -26,12 +21,10 @@ import upm.pmd.grupo14.ArticleDetailActivity;
 import upm.pmd.grupo14.ArticleEditActivity;
 import upm.pmd.grupo14.MainActivity;
 import upm.pmd.grupo14.R;
-import upm.pmd.grupo14.common.Category;
 import upm.pmd.grupo14.common.Constants;
 import upm.pmd.grupo14.models.appContext.LogContext;
 import upm.pmd.grupo14.models.login.LoginToken;
 import upm.pmd.grupo14.tasks.DeleteArticleTask;
-import upm.pmd.grupo14.tasks.DownloadArticlesTask;
 
 /**
  * ArticleAdapter model the Adapter of an Atricle

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import upm.pmd.grupo14.MainActivity;
 import upm.pmd.grupo14.R;
 import upm.pmd.grupo14.models.appContext.LogContext;
 import upm.pmd.grupo14.models.article.Article;
